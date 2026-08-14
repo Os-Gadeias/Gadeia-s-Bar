@@ -1,6 +1,6 @@
 using System.Reflection;
 using GadeiasBar.Dominio.Compartilhado.Identity;
-using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
+using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,6 @@
 using FluentResults;
 using GadeiasBar.Aplicacao.Compartilhado;
+using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 
 namespace GadeiasBar.Aplicacao.Modulos.ModuloProduto.cs;

@@ -1,7 +1,8 @@
 using GadeiasBar.Dominio.Compartilhado;
 using GadeiasBar.Dominio.Compartilhado.Identity;
+using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 
-namespace GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
+namespace GadeiasBar.Dominio.Modulos.ModuloProduto;
 
 public class Produto : EntidadeBase<Produto>, IEntidadeDoUsuario
 {

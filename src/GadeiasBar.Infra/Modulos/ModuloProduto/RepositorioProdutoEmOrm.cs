@@ -1,3 +1,4 @@
+using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Compartilhado.Orm;
 

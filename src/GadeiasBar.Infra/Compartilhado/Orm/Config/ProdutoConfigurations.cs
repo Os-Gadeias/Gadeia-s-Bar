@@ -1,4 +1,4 @@
-using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
+using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
