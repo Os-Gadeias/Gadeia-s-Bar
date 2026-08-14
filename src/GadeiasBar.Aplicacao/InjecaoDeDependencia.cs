@@ -1,6 +1,6 @@
+using GadeiasBar.Aplicacao.Modulos.ModuloProduto.cs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 
 namespace GadeiasBar.Aplicacao;
 
@@ -11,6 +11,6 @@ public static class InjecaoDeDependencia
         IConfiguration configuration
     )
     {
-
+        services.AddScoped<ServicoProduto>();
     }
 }

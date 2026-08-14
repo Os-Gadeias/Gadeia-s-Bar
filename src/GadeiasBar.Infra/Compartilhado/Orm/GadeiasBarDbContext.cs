@@ -1,5 +1,6 @@
 using System.Reflection;
 using GadeiasBar.Dominio.Compartilhado.Identity;
+using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ public sealed class GadeiasBarDbContext(
     IProvedorDeUsuario? userProvider = null
 ) : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>(options)
 {
-    // public DbSet<Disciplina> Disciplinas => Set<Disciplina>();
+    public DbSet<Produto> Produtos => Set<Produto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,8 +26,8 @@ public sealed class GadeiasBarDbContext(
         // O EF faz cachê do OnModelCreating e variáveis locais não são atualizadas
         if (userProvider is not null)
         {
-            // modelBuilder.Entity<Disciplina>()
-            //     .HasQueryFilter(d => d.UserId == userProvider.Id);
+            modelBuilder.Entity<Produto>()
+                .HasQueryFilter(d => d.UserId == userProvider.Id);
         }
     }
 
