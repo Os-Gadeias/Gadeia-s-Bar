@@ -15,8 +15,7 @@
     <div class="mb-3">
         <label asp-for="TipoProduto" class="form-label fw-semibold text-primary text-uppercase small">Tipo
             Produto</label>
-            <select class="form-control" name="" id="">
-                <option value="">Selecione uma Opção</option>
+            <select class="form-control" asp-for="TipoProduto">
                 <option value="@TipoProduto.Bebida">Bebida</option>
                 <option value="@TipoProduto.Comida">Comida</option>
             </select>

@@ -36,7 +36,7 @@ public class Produto : EntidadeBase<Produto>, IEntidadeDoUsuario
         if (Nome.Length < 2 || Nome.Length > 100)
             erros.Add("O campo \"Nome\" deve conter entre 2 à 100 caracteres.");
 
-        if (TipoProduto != default)
+        if (!Enum.IsDefined(TipoProduto))
             erros.Add("O campo \"Tipo produto\" é obrigatório.");
 
         if (Valor <= 0)

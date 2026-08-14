@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace GadeiasBar.WebApp.Modulos.ModuloProduto;
 
@@ -17,5 +16,11 @@ public record CadastrarProdutoViewModel(
     [Required(ErrorMessage = "O campo \"Tipo Produto\" é obrigatório!")]
     TipoProduto TipoProduto,
     [Required(ErrorMessage = "O campo \"Valor\" é obrigatório!")]
+    decimal Valor
+);
+public record ExcluirProdutoViewModel(
+    Guid Id,
+    string Nome,
+    TipoProduto TipoProduto,
     decimal Valor
 );
