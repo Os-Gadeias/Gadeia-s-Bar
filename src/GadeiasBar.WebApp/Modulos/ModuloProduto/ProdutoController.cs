@@ -36,4 +36,19 @@ public class ProdutoController(IMapper mapper, ServicoProduto servicoProduto) : 
         }
         return RedirectToAction(nameof(Listar));
     }
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<ListarProdutoDto> resultado = servicoProduto.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirProdutoViewModel vm = mapper.Map<ExcluirProdutoViewModel>(resultado.Value);
+
+        return View(vm);
+    }
 }

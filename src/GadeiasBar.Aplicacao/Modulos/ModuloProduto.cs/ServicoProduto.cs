@@ -22,7 +22,15 @@ public class ServicoProduto(IRepositorioProduto repositorioProduto) : ServicoBas
 
         return Result.Ok();
     }
+    public Result<ListarProdutoDto> SelecionarPorId(Guid id)
+    {
+        Produto? produto = repositorioProduto.SelecionarPorId(id);
 
+        if (produto is null)
+            return Result.Fail("Produto não encontrado.");
+
+        return new ListarProdutoDto(produto.Id, produto.Nome, produto.TipoProduto, produto.Valor);
+    }
     public List<ListarProdutoDto> SelecionarTodos()
     {
         return repositorioProduto.SelecionarTodos().Select(p =>
