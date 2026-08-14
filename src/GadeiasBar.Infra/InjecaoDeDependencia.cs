@@ -8,6 +8,8 @@ using Serilog;
 
 using Microsoft.Extensions.Hosting;
 using GadeiasBar.Infra.Compartilhado.Orm;
+using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
+using GadeiasBar.Infra.Modulos.ModuloProduto;
 
 namespace GadeiasBar.Infra;
 
@@ -64,7 +66,7 @@ public static class InjecaoDeDependencia
         .AddSignInManager() // Configuração do SignInManager
         .AddDefaultTokenProviders();
 
-        // services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaEmOrm>();
+        services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
 
     }
 }

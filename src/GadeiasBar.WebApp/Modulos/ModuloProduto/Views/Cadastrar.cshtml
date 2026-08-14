@@ -1,0 +1,33 @@
+@using GadeiasBar.Dominio.Modulos.ModuloProduto.cs
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastro de Produto";
+}
+
+@model CadastrarProdutoViewModel;
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Cadastrar"
+      method="post">
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label fw-semibold text-primary text-uppercase small">Nome</label>
+        <input asp-for="Nome" type="text" class="form-control">
+        <span asp-validation-for="Nome" class="text-danger small fw-semibold"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TipoProduto" class="form-label fw-semibold text-primary text-uppercase small">Tipo
+            Produto</label>
+            <select class="form-control" asp-for="TipoProduto">
+                <option value="@TipoProduto.Bebida">Bebida</option>
+                <option value="@TipoProduto.Comida">Comida</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Valor" class="form-label fw-semibold text-primary text-uppercase small">Valor</label>
+            <input asp-for="Valor" type="number" min="1" class="form-control">
+            <span asp-validation-for="Valor" class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+        </div>
+    </form>
