@@ -8,5 +8,6 @@ public class ProdutoProfile : Profile
     public ProdutoProfile()
     {
         CreateMap<ListarProdutoDto, ListarProdutoViewModel>();
+        CreateMap<CadastrarProdutoViewModel, CadastrarProdutoDto>();
     }
 }

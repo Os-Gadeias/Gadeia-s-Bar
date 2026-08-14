@@ -24,6 +24,6 @@ public class ProdutoConfigurations : IEntityTypeConfiguration<Produto>
         .IsRequired();
 
         builder.Property(p => p.Valor)
-        .IsRequired();
+        .IsRequired().HasPrecision(6, 2);
     }
 }

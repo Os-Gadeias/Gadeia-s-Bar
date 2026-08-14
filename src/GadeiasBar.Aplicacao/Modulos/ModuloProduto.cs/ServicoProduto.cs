@@ -1,3 +1,4 @@
+using FluentResults;
 using GadeiasBar.Aplicacao.Compartilhado;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 
@@ -5,6 +6,23 @@ namespace GadeiasBar.Aplicacao.Modulos.ModuloProduto.cs;
 
 public class ServicoProduto(IRepositorioProduto repositorioProduto) : ServicoBase<Produto>
 {
+    public Result Cadastrar(CadastrarProdutoDto dto)
+    {
+        Produto produto = new(dto.Nome, dto.TipoProduto, dto.Valor);
+
+        Result resultadoValidacao = ValidarEntidade(produto);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        if (ExisteProduto_ComMesmoNome(dto.Nome))
+            return Falha(nameof(dto.Nome), $"O nome: {dto.Nome} já está sendo utilizado!");
+
+        repositorioProduto.Cadastrar(produto);
+
+        return Result.Ok();
+    }
+
     public List<ListarProdutoDto> SelecionarTodos()
     {
         return repositorioProduto.SelecionarTodos().Select(p =>
@@ -12,5 +30,9 @@ public class ServicoProduto(IRepositorioProduto repositorioProduto) : ServicoBas
             p.Id, p.Nome,
             p.TipoProduto, p.Valor
             )).ToList();
+    }
+    private bool ExisteProduto_ComMesmoNome(string nome, Guid? idIgnorado = null)
+    {
+        return repositorioProduto.SelecionarTodos().Any(p => p.Nome == nome && p.Id != idIgnorado);
     }
 }

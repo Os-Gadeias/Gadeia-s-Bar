@@ -8,3 +8,8 @@ public record ListarProdutoDto(
     TipoProduto TipoProduto,
     decimal Valor
 );
+public record CadastrarProdutoDto(
+    string Nome,
+    TipoProduto TipoProduto,
+    decimal Valor
+);

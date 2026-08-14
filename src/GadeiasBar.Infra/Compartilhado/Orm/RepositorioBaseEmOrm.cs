@@ -11,7 +11,7 @@ public abstract class RepositorioBaseEmOrm<T>(GadeiasBarDbContext dbContext) whe
     {
         registros.Add(entidade);
 
-        dbContext.SaveChanges();
+        dbContext.SaveChanges(); // commit
     }
 
     public bool Editar(Guid idSelecionado, T entidadeAtualizada)

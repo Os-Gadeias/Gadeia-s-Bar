@@ -20,7 +20,7 @@
 }
 else
 {
-    <div class="row row-cols-1 row-cols-md-2 g-2">
+    <div class="row row-cols-1 row-cols-md-3 g-2">
         @foreach (ListarProdutoViewModel produto in Model)
         {
             <div class="col">
@@ -31,11 +31,8 @@ else
                             <span class="badge text-bg-primary rounded-pill">@produto.Id.ToString().Substring(0, 8)</span>
                         </div>
                         <dl class="row g-2 mb-4">
-                            <dt class="col-sm-4 text-secondary fw-semibold">ID</dt>
-                            <dd class="col-sm-8 mb-0 text-break">@produto.Id</dd>
-
                             <dt class="col-sm-4 text-secondary fw-semibold">Tipo</dt>
-                            <dd class="col-sm-8 mb-0">@produto.TipoProduto.ToString()></dd>
+                            <dd class="col-sm-8 mb-0">@produto.TipoProduto.ToString()</dd>
 
                             <dt class="col-sm-4 text-secondary fw-semibold">Valor</dt>
                             <dd class="col-sm-8 mb-0">R$@produto.Valor</dd>

@@ -27,7 +27,9 @@ public sealed class GadeiasBarDbContext(
         if (userProvider is not null)
         {
             modelBuilder.Entity<Produto>()
-                .HasQueryFilter(d => d.UserId == userProvider.Id);
+        .HasQueryFilter(c => c.UserId == userProvider!.Id);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 
@@ -38,7 +40,7 @@ public sealed class GadeiasBarDbContext(
         if (!userId.HasValue)
         {
             throw new UnauthorizedAccessException(
-                "Não é possível salvar entidades do usuário sem estar autenticado."
+                "Não é possivel salvar entidades da instituicao sem estar autenticado!"
             );
         }
 
@@ -49,62 +51,58 @@ public sealed class GadeiasBarDbContext(
                 case EntityState.Added:
                     if (entry.Entity.UserId == Guid.Empty)
                     {
-                        entry.Property(nameof(IEntidadeDoUsuario.UserId)).CurrentValue = userId.Value;
+                        entry.Property(nameof(IEntidadeDoUsuario.UserId)).CurrentValue = userId;
                     }
-                    else if (entry.Entity.UserId != userId.Value)
+                    else if (entry.Entity.UserId != userId)
                     {
                         throw new UnauthorizedAccessException(
-                            "Tentativa de criar entidade para outro usuário."
-                        );
+                            "Tentativa de Criar entidade para outra instituição!"
+                         );
                     }
-
                     break;
 
                 case EntityState.Modified:
-                    Guid idOriginalInstituicao = entry
-                        .Property(nameof(IEntidadeDoUsuario.UserId))
-                        .OriginalValue is Guid idOriginal
-                        ? idOriginal
-                        : Guid.Empty;
 
-                    Guid idAtualInstituicao = entry
-                        .Property(nameof(IEntidadeDoUsuario.UserId))
-                        .OriginalValue is Guid idAtual
-                        ? idAtual
-                        : Guid.Empty;
+                    Guid idInstituicaoOriginal = entry
+                    .Property(nameof(IEntidadeDoUsuario.UserId))
+                    .OriginalValue is Guid originalGuid
+                    ? originalGuid : Guid.Empty;
 
-                    if (idOriginalInstituicao != idAtualInstituicao)
+                    Guid idAtualIntituicao = entry.
+                    Property(nameof(IEntidadeDoUsuario.UserId))
+                    .OriginalValue is Guid idAtual
+                    ? idAtual : Guid.Empty;
+
+                    if (idAtualIntituicao != idInstituicaoOriginal)
                     {
                         throw new UnauthorizedAccessException(
-                              "Não é permitido alterar o usuário de uma entidade."
-                          );
+                            "Não é permitido alterar a instituição de uma entidade!"
+                         );
                     }
 
-                    if (idAtualInstituicao != userId.Value)
+                    if (idAtualIntituicao != userId)
                     {
                         throw new UnauthorizedAccessException(
-                            "Tentativa de modificar entidade de outro usuário."
-                        );
+                            "Tentativa de Criar entidade para outra instituição!"
+                         );
                     }
-
                     break;
 
                 case EntityState.Deleted:
-                    Guid instituicaoOriginal = entry
-                        .Property(nameof(IEntidadeDoUsuario.UserId))
-                        .OriginalValue is Guid original
-                        ? original
-                        : Guid.Empty;
 
-                    if (instituicaoOriginal != userId.Value)
+                    Guid InstituicaoOriginal = entry
+                   .Property(nameof(IEntidadeDoUsuario.UserId))
+                   .OriginalValue is Guid original
+                   ? original : Guid.Empty;
+
+                    if (InstituicaoOriginal != userId.Value)
                     {
                         throw new UnauthorizedAccessException(
-                            "Tentativa de excluir entidade de outro usuário."
-                        );
+                            "Tentativa de Criar entidade para outra instituição!"
+                         );
                     }
 
                     break;
-
             }
         }
 
