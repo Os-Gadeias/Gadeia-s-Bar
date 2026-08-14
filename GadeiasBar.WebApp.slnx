@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GadeiasBar.Dominio/GadeiasBar.Dominio.csproj" />
+    <Project Path="src/GadeiasBar.Aplicacao/GadeiasBar.Aplicacao.csproj" />
+    <Project Path="src/GadeiasBar.Infra/GadeiasBar.Infra.csproj" />
+    <Project Path="src/GadeiasBar.WebApp/GadeiasBar.WebApp.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GadeiasBar.Testes.E2E/GadeiasBar.Testes.E2E.csproj" />
+    <Project Path="tests/GadeiasBar.Testes.Integracao/GadeiasBar.Testes.Integracao.csproj" />
+    <Project Path="tests/GadeiasBar.Testes.Unidade/GadeiasBar.Testes.Unidade.csproj" />
+  </Folder>
+</Solution>
