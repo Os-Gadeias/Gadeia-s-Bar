@@ -19,3 +19,9 @@ public record ExcluirProdutoDto(
     TipoProduto TipoProduto,
     decimal Valor
 );
+public record EditarProdutoDto(
+    Guid Id,
+    string Nome,
+    TipoProduto TipoProduto,
+    decimal Valor
+);

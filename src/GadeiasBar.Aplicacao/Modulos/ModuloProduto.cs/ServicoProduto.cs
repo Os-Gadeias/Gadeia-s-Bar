@@ -34,7 +34,27 @@ public class ServicoProduto(IRepositorioProduto repositorioProduto) : ServicoBas
 
         return Result.Ok();
     }
+    public Result Editar(EditarProdutoDto dto)
+    {
+        Produto? produto = repositorioProduto.SelecionarPorId(dto.Id);
 
+        if (produto is null)
+            return Falha(nameof(dto.Nome), "Produto não encontrado.");
+
+        Produto produtoAtualizado = new(dto.Nome, dto.TipoProduto, dto.Valor);
+
+        Result resultadoValidacao = ValidarEntidade(produtoAtualizado);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        if (ExisteProduto_ComMesmoNome(dto.Nome, dto.Id))
+            return Falha(nameof(dto.Nome), "Já existe um produto com este nome.");
+
+        repositorioProduto.Editar(produto.Id, produtoAtualizado);
+
+        return Result.Ok();
+    }
     public Result<ListarProdutoDto> SelecionarPorId(Guid id)
     {
         Produto? produto = repositorioProduto.SelecionarPorId(id);

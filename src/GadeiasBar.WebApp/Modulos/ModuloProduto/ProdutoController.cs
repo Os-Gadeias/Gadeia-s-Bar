@@ -75,4 +75,20 @@ public class ProdutoController(IMapper mapper, ServicoProduto servicoProduto) : 
 
         return View(vm);
     }
+    [HttpPost]
+    public ActionResult Editar(EditarProdutoViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View();
+
+        EditarProdutoDto dto = mapper.Map<EditarProdutoDto>(vm);
+
+        Result resultado = servicoProduto.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+        }
+        return RedirectToAction(nameof(Listar));
+    }
 }
