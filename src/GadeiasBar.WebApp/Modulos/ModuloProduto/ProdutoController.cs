@@ -60,4 +60,19 @@ public class ProdutoController(IMapper mapper, ServicoProduto servicoProduto) : 
 
         return RedirectToAction(nameof(Listar));
     }
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<ListarProdutoDto> resultado = servicoProduto.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarProdutoViewModel vm = mapper.Map<EditarProdutoViewModel>(resultado.Value);
+
+        return View(vm);
+    }
 }

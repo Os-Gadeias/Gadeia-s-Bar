@@ -24,3 +24,13 @@ public record ExcluirProdutoViewModel(
     TipoProduto TipoProduto,
     decimal Valor
 );
+public record EditarProdutoViewModel(
+    Guid Id,
+    [Required(ErrorMessage = "O campo \"Nome\" é obrigatório!")]
+    [MinLength( 2, ErrorMessage = "O campo \"Nome\" deve conter entre 2 à 100 caracteres!")]
+    string Nome,
+    [Required(ErrorMessage = "O campo \"Tipo Produto\" é obrigatório!")]
+    TipoProduto TipoProduto,
+    [Required(ErrorMessage = "O campo \"Valor\" é obrigatório!")]
+    decimal Valor
+);

@@ -10,6 +10,7 @@ public class ProdutoProfile : Profile
         CreateMap<ListarProdutoDto, ListarProdutoViewModel>();
         CreateMap<CadastrarProdutoViewModel, CadastrarProdutoDto>();
         CreateMap<ListarProdutoDto, ExcluirProdutoViewModel>();
+        CreateMap<ListarProdutoDto, EditarProdutoViewModel>();
         CreateMap<ExcluirProdutoViewModel, ExcluirProdutoDto>();
     }
 }
