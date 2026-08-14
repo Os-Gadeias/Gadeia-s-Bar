@@ -1,12 +1,14 @@
 using GadeiasBar.Dominio.Compartilhado;
+using GadeiasBar.Dominio.Compartilhado.Identity;
 
 namespace GadeiasBar.Dominio.Modulos.ModuloMesa;
 
-public class Mesa : EntidadeBase<Mesa>
+public class Mesa : EntidadeBase<Mesa>, IEntidadeDoUsuario
 {
     public int NumeroMesa { get; set; } = 0;
     public int QuantidadeLugares { get; set; } = 0;
     public StatusMesa statusMesa { get; set; }
+    public Guid UserId { get; set; }
 
     public Mesa() { }
 
@@ -49,3 +51,4 @@ public class Mesa : EntidadeBase<Mesa>
         return erros;
     }
 }
+
