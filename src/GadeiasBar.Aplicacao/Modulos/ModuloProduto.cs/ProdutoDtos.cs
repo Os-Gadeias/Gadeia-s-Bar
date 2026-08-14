@@ -13,3 +13,9 @@ public record CadastrarProdutoDto(
     TipoProduto TipoProduto,
     decimal Valor
 );
+public record ExcluirProdutoDto(
+    Guid Id,
+    string Nome,
+    TipoProduto TipoProduto,
+    decimal Valor
+);

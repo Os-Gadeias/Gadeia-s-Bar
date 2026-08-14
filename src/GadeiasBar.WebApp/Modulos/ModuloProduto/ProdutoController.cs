@@ -51,4 +51,13 @@ public class ProdutoController(IMapper mapper, ServicoProduto servicoProduto) : 
 
         return View(vm);
     }
+    [HttpPost]
+    public ActionResult Excluir(ExcluirProdutoViewModel vm)
+    {
+        ExcluirProdutoDto dto = mapper.Map<ExcluirProdutoDto>(vm);
+
+        Result resultado = servicoProduto.Excluir(dto);
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

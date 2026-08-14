@@ -22,6 +22,19 @@ public class ServicoProduto(IRepositorioProduto repositorioProduto) : ServicoBas
 
         return Result.Ok();
     }
+
+    public Result Excluir(ExcluirProdutoDto dto)
+    {
+        Produto? produto = repositorioProduto.SelecionarPorId(dto.Id);
+
+        if (produto is null)
+            return Result.Fail("Produto não encontrado");
+
+        repositorioProduto.Excluir(dto.Id);
+
+        return Result.Ok();
+    }
+
     public Result<ListarProdutoDto> SelecionarPorId(Guid id)
     {
         Produto? produto = repositorioProduto.SelecionarPorId(id);
