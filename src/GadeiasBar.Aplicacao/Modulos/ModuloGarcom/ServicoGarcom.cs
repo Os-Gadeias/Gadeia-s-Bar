@@ -55,4 +55,21 @@ public class ServicoGarcom(IRepositorioGarcom repositorioGarcom) : ServicoBase<G
 
         return Result.Ok();
     }
+
+    public Result Editar(EditarGarcomDto dto)
+    {
+        Garcom garcomAtualizado = new(dto.Nome);
+
+        Result validarEntidade = ValidarEntidade(garcomAtualizado);
+
+        if (validarEntidade.IsFailed)
+            return Falha(nameof(dto.Nome), validarEntidade.Errors.First().Message);
+
+        if (ExisteGarcomComMesmoNome(dto.Nome, dto.Id))
+            return Falha(nameof(dto.Nome), "Já existe um garçom com esse nome!");
+
+        repositorioGarcom.Editar(dto.Id, garcomAtualizado);
+
+        return Result.Ok();
+    }
 }

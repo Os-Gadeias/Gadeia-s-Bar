@@ -65,4 +65,36 @@ public class GarcomController(IMapper mapper, ServicoGarcom servicoGarcom) : Con
 
         return RedirectToAction(nameof(Listar));
     }
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<ListarGarcomDto> resultado = servicoGarcom.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarGarcomViewModels vm = mapper.Map<EditarGarcomViewModels>(resultado.Value);
+
+        return View(vm);
+    }
+    [HttpPost]
+    public ActionResult Editar(EditarGarcomViewModels vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        EditarGarcomDto dto = mapper.Map<EditarGarcomDto>(vm);
+
+        Result resultado = servicoGarcom.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+            return View(vm);
+        }
+        return RedirectToAction(nameof(Listar));
+    }
 }
