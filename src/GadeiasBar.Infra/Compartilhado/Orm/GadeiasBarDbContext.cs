@@ -1,5 +1,6 @@
 using System.Reflection;
 using GadeiasBar.Dominio.Compartilhado.Identity;
+using GadeiasBar.Dominio.Modulos.ModuloMesa;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ public sealed class GadeiasBarDbContext(
     IProvedorDeUsuario? userProvider = null
 ) : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>(options)
 {
-    // public DbSet<Disciplina> Disciplinas => Set<Disciplina>();
+    public DbSet<Mesa> Mesas => Set<Mesa>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
