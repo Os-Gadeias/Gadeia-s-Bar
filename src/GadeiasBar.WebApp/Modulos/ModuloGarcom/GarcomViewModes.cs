@@ -1,17 +1,17 @@
 namespace GadeiasBar.WebApp.Modulos.ModuloGarcom;
 
 public record ListarGarcomViewModels(
-    string Id,
+    Guid Id,
     string Nome
 );
 public record CadastrarGarcomViewModels(
-    string Nome
+    Guid Nome
 );
 public record EditarGarcomViewModels(
-    string Id,
+    Guid Id,
     string Nome
 );
 public record ExcluirGarcomViewModels(
-    string Id,
+    Guid Id,
     string Nome
 );
