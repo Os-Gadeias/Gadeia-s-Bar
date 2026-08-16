@@ -1,5 +1,6 @@
 using System.Reflection;
 using GadeiasBar.Dominio.Compartilhado.Identity;
+using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -27,6 +28,9 @@ public sealed class GadeiasBarDbContext(
         if (userProvider is not null)
         {
             modelBuilder.Entity<Produto>()
+                .HasQueryFilter(c => c.UserId == userProvider!.Id);
+
+            modelBuilder.Entity<Garcom>()
                 .HasQueryFilter(c => c.UserId == userProvider!.Id);
 
             base.OnModelCreating(modelBuilder);

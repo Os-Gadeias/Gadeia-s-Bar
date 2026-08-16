@@ -1,11 +1,12 @@
 using GadeiasBar.Dominio.Compartilhado;
+using GadeiasBar.Dominio.Compartilhado.Identity;
 
 namespace GadeiasBar.Dominio.Modulos.ModuloGarcom;
 
-public class Garcom : EntidadeBase<Garcom>
+public class Garcom : EntidadeBase<Garcom>, IEntidadeDoUsuario
 {
     public string Nome { get; set; } = string.Empty;
-
+    public Guid UserId { get; set; }
 
     public Garcom()
     {
