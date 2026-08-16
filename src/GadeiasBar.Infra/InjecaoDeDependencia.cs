@@ -1,17 +1,18 @@
+using GadeiasBar.Dominio.Modulos.ModuloGarcom;
+using GadeiasBar.Dominio.Modulos.ModuloMesa;
+using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Compartilhado.Logging;
+using GadeiasBar.Infra.Compartilhado.Orm;
+using GadeiasBar.Infra.Modulos.ModuloGarcom;
+using GadeiasBar.Infra.Modulos.ModuloMesa;
+using GadeiasBar.Infra.Modulos.ModuloProduto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
-using Microsoft.Extensions.Hosting;
-using GadeiasBar.Infra.Compartilhado.Orm;
-using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
-using GadeiasBar.Infra.Modulos.ModuloProduto;
-using GadeiasBar.Dominio.Modulos.ModuloGarcom;
-using GadeiasBar.Infra.Modulos.ModuloGarcom;
 
 namespace GadeiasBar.Infra;
 
@@ -24,14 +25,11 @@ public static class InjecaoDeDependencia
         IHostEnvironment environment
     )
     {
-        // Injeta logs do Serilog
         Serilog.ILogger logger = SerilogFactory.Create(configuration, environment);
 
         logging.ClearProviders();
-
         services.AddSerilog(logger, dispose: true);
 
-        // Injeta o DbContext do EF
         services.AddDbContext<GadeiasBarDbContext>(options =>
         {
             string? connectionString = configuration.GetConnectionString("SqlServerEF");
@@ -49,7 +47,6 @@ public static class InjecaoDeDependencia
             });
         });
 
-        // Configuração do Usuário no Identity
         services.AddIdentityCore<IdentityUser<Guid>>(options =>
         {
             options.User.RequireUniqueEmail = true;
@@ -63,11 +60,12 @@ public static class InjecaoDeDependencia
             options.Lockout.MaxFailedAccessAttempts = 5;
             options.Lockout.AllowedForNewUsers = true;
         })
-        .AddRoles<IdentityRole<Guid>>() // Configuração de Cargos/Papéis no Identity
-        .AddEntityFrameworkStores<GadeiasBarDbContext>() // Integração com EntityFramework
-        .AddSignInManager() // Configuração do SignInManager
+        .AddRoles<IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<GadeiasBarDbContext>()
+        .AddSignInManager()
         .AddDefaultTokenProviders();
 
+        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>();
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>();
     }

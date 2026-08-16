@@ -4,6 +4,7 @@ using GadeiasBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(GadeiasBarDbContext))]
-    partial class GadeiasBarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260816183039_AddMesaEntity")]
+    partial class AddMesaEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,25 +24,6 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloGarcom.Garcom", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id")
-                        .HasName("PK_Garcom");
-
-                    b.ToTable("Garcons");
-                });
 
             modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloMesa.Mesa", b =>
                 {
@@ -63,32 +47,6 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mesas", (string)null);
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloProduto.Produto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("TipoProduto")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_Produto");
-
-                    b.ToTable("TB_Produto", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

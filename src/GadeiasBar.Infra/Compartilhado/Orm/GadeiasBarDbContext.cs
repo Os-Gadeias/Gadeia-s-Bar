@@ -1,6 +1,7 @@
 using System.Reflection;
 using GadeiasBar.Dominio.Compartilhado.Identity;
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
+using GadeiasBar.Dominio.Modulos.ModuloMesa;
 using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,27 +14,27 @@ public sealed class GadeiasBarDbContext(
     IProvedorDeUsuario? userProvider = null
 ) : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>(options)
 {
+    public DbSet<Mesa> Mesas => Set<Mesa>();
     public DbSet<Produto> Produtos => Set<Produto>();
+    public DbSet<Garcom> Garcons => Set<Garcom>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         Assembly assembly = typeof(GadeiasBarDbContext).Assembly;
-
         modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
-        // Query Filters devem utilizar a dependência do UserProvider diretamente
-        // O EF faz cachê do OnModelCreating e variáveis locais não são atualizadas
         if (userProvider is not null)
         {
+            modelBuilder.Entity<Mesa>()
+                .HasQueryFilter(c => c.UserId == userProvider.Id);
+
             modelBuilder.Entity<Produto>()
-                .HasQueryFilter(c => c.UserId == userProvider!.Id);
+                .HasQueryFilter(c => c.UserId == userProvider.Id);
 
             modelBuilder.Entity<Garcom>()
-                .HasQueryFilter(c => c.UserId == userProvider!.Id);
-
-            base.OnModelCreating(modelBuilder);
+                .HasQueryFilter(c => c.UserId == userProvider.Id);
         }
     }
 
@@ -44,7 +45,7 @@ public sealed class GadeiasBarDbContext(
         if (!userId.HasValue)
         {
             throw new UnauthorizedAccessException(
-                "Não é possivel salvar entidades da instituicao sem estar autenticado!"
+                "Não é possível salvar entidades do usuário sem estar autenticado."
             );
         }
 
@@ -55,57 +56,51 @@ public sealed class GadeiasBarDbContext(
                 case EntityState.Added:
                     if (entry.Entity.UserId == Guid.Empty)
                     {
-                        entry.Property(nameof(IEntidadeDoUsuario.UserId)).CurrentValue = userId;
+                        entry.Property(nameof(IEntidadeDoUsuario.UserId)).CurrentValue = userId.Value;
                     }
-                    else if (entry.Entity.UserId != userId)
+                    else if (entry.Entity.UserId != userId.Value)
                     {
                         throw new UnauthorizedAccessException(
-                            "Tentativa de Criar entidade para outra instituição!"
-                         );
+                            "Tentativa de criar entidade para outro usuário."
+                        );
                     }
                     break;
 
                 case EntityState.Modified:
+                    Guid idOriginal = entry.Property(nameof(IEntidadeDoUsuario.UserId)).OriginalValue is Guid originalValue
+                        ? originalValue
+                        : Guid.Empty;
 
-                    Guid idInstituicaoOriginal = entry
-                    .Property(nameof(IEntidadeDoUsuario.UserId))
-                    .OriginalValue is Guid originalGuid
-                    ? originalGuid : Guid.Empty;
+                    Guid idAtual = entry.Property(nameof(IEntidadeDoUsuario.UserId)).CurrentValue is Guid currentValue
+                        ? currentValue
+                        : Guid.Empty;
 
-                    Guid idAtualIntituicao = entry.
-                    Property(nameof(IEntidadeDoUsuario.UserId))
-                    .OriginalValue is Guid idAtual
-                    ? idAtual : Guid.Empty;
-
-                    if (idAtualIntituicao != idInstituicaoOriginal)
+                    if (idOriginal != idAtual)
                     {
                         throw new UnauthorizedAccessException(
-                            "Não é permitido alterar a instituição de uma entidade!"
-                         );
+                            "Não é permitido alterar o usuário de uma entidade."
+                        );
                     }
 
-                    if (idAtualIntituicao != userId)
+                    if (idAtual != userId.Value)
                     {
                         throw new UnauthorizedAccessException(
-                            "Tentativa de Criar entidade para outra instituição!"
-                         );
+                            "Tentativa de modificar entidade de outro usuário."
+                        );
                     }
                     break;
 
                 case EntityState.Deleted:
+                    Guid instituicaoOriginal = entry.Property(nameof(IEntidadeDoUsuario.UserId)).OriginalValue is Guid originalDeletedValue
+                        ? originalDeletedValue
+                        : Guid.Empty;
 
-                    Guid InstituicaoOriginal = entry
-                   .Property(nameof(IEntidadeDoUsuario.UserId))
-                   .OriginalValue is Guid original
-                   ? original : Guid.Empty;
-
-                    if (InstituicaoOriginal != userId.Value)
+                    if (instituicaoOriginal != userId.Value)
                     {
                         throw new UnauthorizedAccessException(
-                            "Tentativa de Criar entidade para outra instituição!"
-                         );
+                            "Tentativa de excluir entidade de outro usuário."
+                        );
                     }
-
                     break;
             }
         }
