@@ -57,6 +57,16 @@ public class ServicoMesa(IRepositorioMesa repositorioMesa) : ServicoBase<Mesa>
         return Result.Ok();
     }
 
+    public Result<ListarMesaDto> SelecionarPorId(Guid id)
+    {
+        Mesa? mesa = repositorioMesa.SelecionarPorId(id);
+
+        if (mesa == null)
+            return Result.Fail("A mesa não foi encontrada");
+
+        return new ListarMesaDto(mesa.Id, mesa.NumeroMesa, mesa.QuantidadeLugares, mesa.statusMesa);
+    }
+
     public List<ListarMesaDto> SelecionarTodos()
     {
         return repositorioMesa.SelecionarTodos().Select(m =>

@@ -1,6 +1,8 @@
 using AutoMapper;
 using FluentResults;
 using GadeiasBar.Aplicacao.Modulos.ModuloMesa;
+using GadeiasBar.Dominio.Modulos.ModuloMesa;
+using GadeiasBar.Infra.Compartilhado.Orm;
 using GadeiasBar.WebApp.Compartilhado.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +38,32 @@ public class MesaController(IMapper mapper, ServicoMesa servicoMesa) : Controlle
             ModelState.AddModelError(result);
             return View(vm);
         }
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+    [HttpGet]
+    public ActionResult Excluir(Guid Id)
+    {
+        Result<ListarMesaDto> result = servicoMesa.SelecionarPorId(Id);
+
+        if (result.IsFailed)
+        {
+            TempData.AddErrorMessage(result);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirMesaViewModel vm = mapper.Map<ExcluirMesaViewModel>(result.Value);
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirMesaViewModel vm)
+    {
+        ExcluirMesaDto dto = mapper.Map<ExcluirMesaDto>(vm);
+
+        Result result = servicoMesa.Excluir(dto);
 
         return RedirectToAction(nameof(Listar));
     }
