@@ -1,3 +1,4 @@
+using GadeiasBar.Aplicacao.Modulos.ModuloConta;
 using GadeiasBar.Aplicacao.Modulos.ModuloGarcom;
 using GadeiasBar.Aplicacao.Modulos.ModuloProduto.cs;
 using Microsoft.Extensions.Configuration;
@@ -14,5 +15,6 @@ public static class InjecaoDeDependencia
     {
         services.AddScoped<ServicoProduto>();
         services.AddScoped<ServicoGarcom>();
+        services.AddScoped<ServicoConta>();
     }
 }

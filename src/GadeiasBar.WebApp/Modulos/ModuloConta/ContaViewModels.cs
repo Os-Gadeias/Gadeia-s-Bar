@@ -9,7 +9,8 @@ public record ListarContaViewModel(
     string Mesa,
     DateTime DataDeAbertura,
     DateTime? DataDeFechamento,
-    StatusConta StatusConta
+    StatusConta StatusConta,
+    decimal ValorFinal
 );
 public record CadastrarContaViewModel(
     string NomeCliente,
@@ -29,5 +30,6 @@ public record ExcluirContaViewModel(
     string Mesa,
     DateTime DataDeAbertura,
     DateTime? DataDeFechamento,
-    StatusConta StatusConta
+    StatusConta StatusConta,
+    decimal ValorFinal
 );

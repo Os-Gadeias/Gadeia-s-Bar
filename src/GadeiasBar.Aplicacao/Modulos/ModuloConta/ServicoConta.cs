@@ -5,5 +5,8 @@ namespace GadeiasBar.Aplicacao.Modulos.ModuloConta;
 
 public class ServicoConta : ServicoBase<Conta>
 {
-    
+    public List<ListarContaDto> SelecionarTodos()
+    {
+        throw new NotImplementedException();
+    }
 }

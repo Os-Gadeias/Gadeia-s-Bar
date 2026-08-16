@@ -11,7 +11,7 @@ public class ContaController(
 {
     public ActionResult Listar()
     {
-        
+        List<ListarContaDto> dtos = servicoConta.SelecionarTodos();
 
         return View();
     }

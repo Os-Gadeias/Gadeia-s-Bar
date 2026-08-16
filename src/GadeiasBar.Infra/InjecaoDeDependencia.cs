@@ -12,6 +12,8 @@ using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Modulos.ModuloProduto;
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 using GadeiasBar.Infra.Modulos.ModuloGarcom;
+using GadeiasBar.Dominio.Modulos.ModuloConta;
+using GadeiasBar.Infra.Modulos.ModuloConta;
 
 namespace GadeiasBar.Infra;
 
@@ -70,5 +72,6 @@ public static class InjecaoDeDependencia
 
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>();
+        services.AddScoped<IRepositorioConta, RepositorioContaEmOrm>();
     }
 }

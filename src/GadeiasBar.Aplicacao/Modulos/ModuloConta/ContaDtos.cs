@@ -2,7 +2,6 @@ using GadeiasBar.Dominio.Modulos.ModuloConta;
 
 namespace GadeiasBar.Aplicacao.Modulos.ModuloConta;
 
-
 public record ListarContaDto(
     Guid Id,
     string NomeCliente,
@@ -10,7 +9,8 @@ public record ListarContaDto(
     string Mesa,
     DateTime DataDeAbertura,
     DateTime? DataDeFechamento,
-    StatusConta StatusConta
+    StatusConta StatusConta,
+    decimal ValorFinal
 );
 public record CadastrarContaDto(
     string NomeCliente,
@@ -30,5 +30,6 @@ public record ExcluirContaDto(
     string Mesa,
     DateTime DataDeAbertura,
     DateTime? DataDeFechamento,
-    StatusConta StatusConta
+    StatusConta StatusConta,
+    decimal ValorFinal
 );
