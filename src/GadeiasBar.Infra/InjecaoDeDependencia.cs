@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using GadeiasBar.Infra.Compartilhado.Orm;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Modulos.ModuloProduto;
+using GadeiasBar.Dominio.Modulos.ModuloGarcom;
+using GadeiasBar.Infra.Modulos.ModuloGarcom;
 
 namespace GadeiasBar.Infra;
 
@@ -67,6 +69,6 @@ public static class InjecaoDeDependencia
         .AddDefaultTokenProviders();
 
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
-
+        services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>();
     }
 }

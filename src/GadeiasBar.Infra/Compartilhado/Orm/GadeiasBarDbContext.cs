@@ -27,7 +27,7 @@ public sealed class GadeiasBarDbContext(
         if (userProvider is not null)
         {
             modelBuilder.Entity<Produto>()
-        .HasQueryFilter(c => c.UserId == userProvider!.Id);
+                .HasQueryFilter(c => c.UserId == userProvider!.Id);
 
             base.OnModelCreating(modelBuilder);
         }
