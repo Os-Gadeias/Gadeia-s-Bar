@@ -38,4 +38,31 @@ public class GarcomController(IMapper mapper, ServicoGarcom servicoGarcom) : Con
 
         return RedirectToAction(nameof(Listar));
     }
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<ListarGarcomDto> resultado = servicoGarcom.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirGarcomViewModels vm = mapper.Map<ExcluirGarcomViewModels>(resultado.Value);
+
+        return View(vm);
+    }
+    [HttpPost]
+    public ActionResult Excluir(ExcluirGarcomViewModels vm)
+    {
+        ExcluirGarcomDto dto = mapper.Map<ExcluirGarcomDto>(vm);
+
+        Result resultado = servicoGarcom.Excluir(dto);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

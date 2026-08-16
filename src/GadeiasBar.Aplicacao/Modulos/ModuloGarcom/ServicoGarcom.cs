@@ -30,9 +30,29 @@ public class ServicoGarcom(IRepositorioGarcom repositorioGarcom) : ServicoBase<G
         new ListarGarcomDto(g.Id, g.Nome))
         .ToList();
     }
+    public Result<ListarGarcomDto> SelecionarPorId(Guid id)
+    {
+        Garcom? garcom = repositorioGarcom.SelecionarPorId(id);
+
+        if (garcom is null)
+            return Result.Fail("Garcom não encontrado.");
+
+        return new ListarGarcomDto(garcom.Id, garcom.Nome);
+    }
     private bool ExisteGarcomComMesmoNome(string nome, Guid? idIgnorado = null)
     {
         return repositorioGarcom.SelecionarTodos().Any(g => g.Nome == nome && g.Id != idIgnorado);
     }
 
+    public Result Excluir(ExcluirGarcomDto dto)
+    {
+        Garcom? garcom = repositorioGarcom.SelecionarPorId(dto.Id);
+
+        if (garcom is null)
+            return Result.Fail("Garcom não encontrado.");
+
+        repositorioGarcom.Excluir(garcom.Id);
+
+        return Result.Ok();
+    }
 }
