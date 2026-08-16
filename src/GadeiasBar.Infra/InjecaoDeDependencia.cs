@@ -1,13 +1,14 @@
+using GadeiasBar.Dominio.Modulos.ModuloMesa;
 using GadeiasBar.Infra.Compartilhado.Logging;
+using GadeiasBar.Infra.Compartilhado.Orm;
+using GadeiasBar.Infra.Modulos.ModuloMesa;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
-using Microsoft.Extensions.Hosting;
-using GadeiasBar.Infra.Compartilhado.Orm;
 
 namespace GadeiasBar.Infra;
 
@@ -64,7 +65,6 @@ public static class InjecaoDeDependencia
         .AddSignInManager() // Configuração do SignInManager
         .AddDefaultTokenProviders();
 
-        // services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaEmOrm>();
-
+        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>();
     }
 }
