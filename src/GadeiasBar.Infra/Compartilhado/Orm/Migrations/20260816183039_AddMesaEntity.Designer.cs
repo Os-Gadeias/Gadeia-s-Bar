@@ -4,6 +4,7 @@ using GadeiasBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(GadeiasBarDbContext))]
-    partial class GadeiasBarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260816183039_AddMesaEntity")]
+    partial class AddMesaEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,63 +24,6 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataDeAbertura")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataDeFechamento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GarcomId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MesaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("NomeCliente")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("StatusConta")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id")
-                        .HasName("PK_Conta");
-
-                    b.HasIndex("GarcomId");
-
-                    b.HasIndex("MesaId");
-
-                    b.ToTable("Conta");
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloGarcom.Garcom", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id")
-                        .HasName("PK_Garcom");
-
-                    b.ToTable("Garcons");
-                });
 
             modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloMesa.Mesa", b =>
                 {
@@ -101,79 +47,6 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mesas", (string)null);
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloMesa.Mesa", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("NumeroMesa")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantidadeLugares")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("statusMesa")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Mesa");
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloPedido.Pedido", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ContaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProdutoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContaId");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("Pedido");
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloProduto.Produto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("TipoProduto")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_Produto");
-
-                    b.ToTable("TB_Produto", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -373,42 +246,6 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.HasOne("GadeiasBar.Dominio.Modulos.ModuloGarcom.Garcom", "Garcom")
-                        .WithMany()
-                        .HasForeignKey("GarcomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GadeiasBar.Dominio.Modulos.ModuloMesa.Mesa", "Mesa")
-                        .WithMany()
-                        .HasForeignKey("MesaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Garcom");
-
-                    b.Navigation("Mesa");
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloPedido.Pedido", b =>
-                {
-                    b.HasOne("GadeiasBar.Dominio.Modulos.ModuloConta.Conta", null)
-                        .WithMany("Pedidos")
-                        .HasForeignKey("ContaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GadeiasBar.Dominio.Modulos.ModuloProduto.Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Produto");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -458,11 +295,6 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618
         }
