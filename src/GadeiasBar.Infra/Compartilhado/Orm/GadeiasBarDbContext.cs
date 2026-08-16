@@ -3,6 +3,7 @@ using GadeiasBar.Dominio.Compartilhado.Identity;
 using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 using GadeiasBar.Dominio.Modulos.ModuloMesa;
+using GadeiasBar.Dominio.Modulos.ModuloPedido;
 using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -39,6 +40,9 @@ public sealed class GadeiasBarDbContext(
 
             modelBuilder.Entity<Conta>()
                 .HasQueryFilter(c => c.UserId == userProvider!.Id);
+
+            modelBuilder.Entity<Pedido>()
+                .HasQueryFilter(p => p.UserId == userProvider.Id);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,12 +1,14 @@
 using GadeiasBar.Dominio.Compartilhado;
+using GadeiasBar.Dominio.Compartilhado.Identity;
 using GadeiasBar.Dominio.Modulos.ModuloProduto;
 
 namespace GadeiasBar.Dominio.Modulos.ModuloPedido;
 
-public class Pedido : EntidadeBase<Pedido>
+public class Pedido : EntidadeBase<Pedido>, IEntidadeDoUsuario
 {
-    public Produto Produto {get; set;} = null!;
-    public int Quantidade { get; set;}
+    public Produto Produto { get; set; } = null!;
+    public int Quantidade { get; set; }
+    public Guid UserId { get; set; }
 
     public override void Atualizar(Pedido entidadeAtualizada)
     {
