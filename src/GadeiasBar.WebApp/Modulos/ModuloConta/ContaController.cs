@@ -12,7 +12,7 @@ public class ContaController(
     public ActionResult Listar()
     {
         List<ListarContaDto> dtos = servicoConta.SelecionarTodos();
-
-        return View();
+        List<ListarContaViewModel> vms = mapper.Map<List<ListarContaViewModel>>(dtos);
+        return View(vms);
     }
 }

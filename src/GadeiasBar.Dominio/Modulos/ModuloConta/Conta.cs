@@ -14,7 +14,7 @@ public class Conta : EntidadeBase<Conta>, IEntidadeDoUsuario
     public DateTime DataDeAbertura { get; set; } = DateTime.Today;
     public DateTime? DataDeFechamento { get; set; } = null;
     public StatusConta StatusConta { get; set; } = StatusConta.Aberta;
-    public List<Pedido> Pedidos = [];
+    public List<Pedido> Pedidos { get; set; } = [];
     public Guid UserId { get; set; }
     public decimal ValorFinal
     {
@@ -51,8 +51,6 @@ public class Conta : EntidadeBase<Conta>, IEntidadeDoUsuario
 
         if (Mesa is null)
             erros.Add("A mesa é obrigatória.");
-
-
 
         return erros;
     }

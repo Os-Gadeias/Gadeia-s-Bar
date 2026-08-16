@@ -9,7 +9,7 @@ public class ContaConfigurations : IEntityTypeConfiguration<Conta>
     public void Configure(EntityTypeBuilder<Conta> builder)
     {
         builder.HasKey(c => c.Id)
-    .HasName("PK_Conta");
+            .HasName("PK_Conta");
 
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
@@ -20,12 +20,10 @@ public class ContaConfigurations : IEntityTypeConfiguration<Conta>
 
         builder.HasOne(c => c.Garcom)
             .WithMany()
-            .HasForeignKey("FK_Conta_Garco")
             .IsRequired();
 
         builder.HasOne(c => c.Mesa)
             .WithMany()
-            .HasForeignKey("FK_Conta_Mesa")
             .IsRequired();
 
         builder.Property(c => c.DataDeAbertura)
@@ -33,5 +31,14 @@ public class ContaConfigurations : IEntityTypeConfiguration<Conta>
 
         builder.Property(c => c.DataDeFechamento)
             .IsRequired(false);
+
+        builder.Property(c => c.StatusConta)
+            .IsRequired();
+
+        builder.HasMany(c => c.Pedidos)
+            .WithOne()
+            .IsRequired();
+
+        builder.Ignore(c => c.ValorFinal);
     }
 }

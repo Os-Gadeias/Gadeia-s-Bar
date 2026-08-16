@@ -4,6 +4,7 @@ using GadeiasBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(GadeiasBarDbContext))]
-    partial class GadeiasBarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260816212331_Conta_Config")]
+    partial class Conta_Config
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

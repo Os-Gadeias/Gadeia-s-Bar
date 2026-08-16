@@ -9,15 +9,19 @@ public class RepositorioContaEmOrm(GadeiasBarDbContext dbContext) : RepositorioB
     public override Conta? SelecionarPorId(Guid idSelecionado)
     {
         return registros
-       .Include(c => c.Garcom)
-       .Include(c => c.Mesa)
+            .Include(c => c.Garcom)
+            .Include(c => c.Mesa)
+            .Include(c => c.Pedidos)
+                .ThenInclude(p => p.Produto)
         .SingleOrDefault(c => c.Id == idSelecionado);
     }
     public override List<Conta> SelecionarTodos()
     {
         return registros.
-        Include(c => c.Garcom)
-       .Include(c => c.Mesa)
+            Include(c => c.Garcom)
+            .Include(c => c.Mesa)
+            .Include(c => c.Pedidos)
+                .ThenInclude(p => p.Produto)
        .ToList();
     }
 }
