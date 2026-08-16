@@ -67,4 +67,38 @@ public class MesaController(IMapper mapper, ServicoMesa servicoMesa) : Controlle
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Editar(Guid Id)
+    {
+        Result<ListarMesaDto> result = servicoMesa.SelecionarPorId(Id);
+
+        if (result.IsFailed)
+        {
+            TempData.AddErrorMessage(result);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarMesaViewModel vm = mapper.Map<EditarMesaViewModel>(result.Value);
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarMesaViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        EditarMesaDto dto = mapper.Map<EditarMesaDto>(vm);
+        Result result = servicoMesa.Editar(dto);
+
+        if (result.IsFailed)
+        {
+            ModelState.AddModelError(string.Empty, "Não foi possivel editar a mesa");
+            return View(vm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

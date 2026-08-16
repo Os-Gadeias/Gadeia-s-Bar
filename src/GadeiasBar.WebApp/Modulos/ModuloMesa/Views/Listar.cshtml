@@ -15,7 +15,7 @@
 @if (Model.Count == 0)
 {
     <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
-        Nenhum produto cadastrado.
+        Nenhuma mesa cadastrada.
     </div>
 }
 else
@@ -27,7 +27,7 @@ else
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
-                            <h5 class="card-title mb-0">@Mesa.NumeroMesa</h5>
+                            <h5 class="card-title mb-0">Mesa @Mesa.NumeroMesa</h5>
                             <span class="badge text-bg-primary rounded-pill">@Mesa.Id.ToString().Substring(0, 8)</span>
                         </div>
                         <dl class="row g-2 mb-4">
@@ -35,7 +35,7 @@ else
                             <dd class="col-sm-8 mb-0">@Mesa.QuantidadeLugares.ToString()</dd>
 
                             <dt class="col-sm-4 text-secondary fw-semibold">Status da Mesa</dt>
-                            <dd class="col-sm-8 mb-0">R$@Mesa.StatusMesa</dd>
+                            <dd class="col-sm-8 mb-0">@Mesa.StatusMesa</dd>
                         </dl>
                         <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
                             <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar"

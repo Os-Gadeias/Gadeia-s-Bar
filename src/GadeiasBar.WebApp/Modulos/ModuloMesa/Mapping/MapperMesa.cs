@@ -10,6 +10,8 @@ public class MapperMesa : Profile
         CreateMap<CadastrarMesaViewModel, CadastrarMesaDto>();
         CreateMap<EditarMesaViewModel, EditarMesaDto>();
         CreateMap<ListarMesaDto, EditarMesaViewModel>();
+        CreateMap<ListarMesaDto, ExcluirMesaViewModel>();
         CreateMap<ExcluirMesaDto, ExcluirMesaViewModel>();
+        CreateMap<ExcluirMesaViewModel, ExcluirMesaDto>();
     }
 }
