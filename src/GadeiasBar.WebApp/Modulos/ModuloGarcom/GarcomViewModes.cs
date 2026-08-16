@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace GadeiasBar.WebApp.Modulos.ModuloGarcom;
 
 public record ListarGarcomViewModels(
@@ -5,10 +7,12 @@ public record ListarGarcomViewModels(
     string Nome
 );
 public record CadastrarGarcomViewModels(
-    Guid Nome
+    [Required (ErrorMessage = "O campo \"Nome\" é obrigatório")]
+    string Nome
 );
 public record EditarGarcomViewModels(
     Guid Id,
+    [Required (ErrorMessage = "O campo \"Nome\" é obrigatório")]
     string Nome
 );
 public record ExcluirGarcomViewModels(
