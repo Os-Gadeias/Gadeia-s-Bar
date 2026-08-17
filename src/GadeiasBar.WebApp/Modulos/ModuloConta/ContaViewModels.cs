@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using GadeiasBar.Dominio.Modulos.ModuloConta;
 
 namespace GadeiasBar.WebApp.Modulos.ModuloConta;
@@ -13,8 +14,11 @@ public record ListarContaViewModel(
     decimal ValorFinal
 );
 public record CadastrarContaViewModel(
+    [Required]
     string NomeCliente,
+    [Required]
     string Garcom,
+    [Required]
     string Mesa
 );
 public record EditarContaViewModel(

@@ -28,6 +28,17 @@ public class Conta : EntidadeBase<Conta>, IEntidadeDoUsuario
             return valorTotal;
         }
     }
+    public Conta()
+    {
+        
+    }
+
+    public Conta(string nomeCliente, Garcom garcom, Mesa mesa)
+    {
+        NomeCliente = nomeCliente;
+        Garcom = garcom;
+        Mesa = mesa;
+    }
 
     public override void Atualizar(Conta entidadeAtualizada)
     {
