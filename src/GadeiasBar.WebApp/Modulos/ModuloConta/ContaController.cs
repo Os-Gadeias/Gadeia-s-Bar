@@ -57,4 +57,16 @@ public class ContaController(
 
         return View(vm);
     }
+    [HttpPost]
+    public ActionResult Excluir(ExcluirContaViewModel vm)
+    {
+        ExcluirContaDto dto = mapper.Map<ExcluirContaDto>(vm);
+
+        Result resultado = servicoConta.Excluir(dto);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

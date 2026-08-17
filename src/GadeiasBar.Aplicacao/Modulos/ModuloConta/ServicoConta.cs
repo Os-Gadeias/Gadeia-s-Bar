@@ -68,4 +68,16 @@ public class ServicoConta(
             conta.StatusConta,
             conta.ValorFinal);
     }
+
+    public Result Excluir(ExcluirContaDto dto)
+    {
+        Conta? conta = repositorioConta.SelecionarPorId(dto.Id);
+
+        if (conta is null)
+            return Result.Fail("Conta não encontrada!");
+
+        repositorioConta.Excluir(dto.Id);
+
+        return Result.Ok();
+    }
 }
