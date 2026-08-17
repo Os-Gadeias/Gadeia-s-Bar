@@ -51,5 +51,21 @@ public class ServicoConta(
         return repositorioGarcom.SelecionarTodos().Select(m => new SelectListItem(m.Nome.ToString(), m.Id.ToString())).ToList();
     }
 
+    public Result<ListarContaDto> SelecionarPorId(Guid id)
+    {
+        Conta? conta = repositorioConta.SelecionarPorId(id);
 
+        if (conta is null)
+            return Result.Fail("Conta não encontrada!");
+
+        return new ListarContaDto(
+            conta.Id,
+            conta.NomeCliente,
+            conta.Garcom.Nome,
+            conta.Mesa.NumeroMesa,
+            conta.DataDeAbertura,
+            conta.DataDeFechamento,
+            conta.StatusConta,
+            conta.ValorFinal);
+    }
 }

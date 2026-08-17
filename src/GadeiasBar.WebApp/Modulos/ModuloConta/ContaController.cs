@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentResults;
 using GadeiasBar.Aplicacao.Modulos.ModuloConta;
+using GadeiasBar.WebApp.Compartilhado.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -40,5 +41,20 @@ public class ContaController(
         Result resultado = servicoConta.Cadastrar(dto);
 
         return RedirectToAction(nameof(Listar));
+    }
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<ListarContaDto> resultado = servicoConta.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirContaViewModel vm = mapper.Map<ExcluirContaViewModel>(resultado.Value);
+
+        return View(vm);
     }
 }
