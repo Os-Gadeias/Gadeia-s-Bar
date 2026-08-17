@@ -33,6 +33,10 @@ public class ServicoConta(
 
         repositorioConta.Cadastrar(conta);
 
+        mesa.OcuparMesa(OcuparAMesa: true);
+
+        repositorioMesa.Editar(mesa.Id, mesa);
+
         return Result.Ok();
     }
 

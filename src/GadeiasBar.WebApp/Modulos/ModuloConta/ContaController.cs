@@ -3,7 +3,6 @@ using FluentResults;
 using GadeiasBar.Aplicacao.Modulos.ModuloConta;
 using GadeiasBar.WebApp.Compartilhado.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GadeiasBar.WebApp.Modulos.ModuloConta;
 
