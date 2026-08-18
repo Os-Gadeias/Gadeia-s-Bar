@@ -1,5 +1,4 @@
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
-using GadeiasBar.Dominio.Modulos.ModuloMesa;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Compartilhado.Logging;
 using GadeiasBar.Infra.Compartilhado.Orm;
@@ -15,8 +14,6 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Infra.Modulos.ModuloConta;
-using GadeiasBar.Infra.Modulos.ModuloMesa;
-
 namespace GadeiasBar.Infra;
 
 public static class InjecaoDeDependencia

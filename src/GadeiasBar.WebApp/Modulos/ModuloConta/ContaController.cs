@@ -68,4 +68,45 @@ public class ContaController(
 
         return RedirectToAction(nameof(Listar));
     }
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<ListarContaDto> resultado = servicoConta.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarContaViewModel vm = mapper.Map<EditarContaViewModel>(resultado.Value);
+        ViewBag.Mesas = servicoConta.CarregarMesas();
+        ViewBag.Garcons = servicoConta.CarregarGarcons();
+
+        return View(vm);
+    }
+    [HttpPost]
+    public ActionResult Editar(EditarContaViewModel vm)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Mesas = servicoConta.CarregarMesas();
+            ViewBag.Garcons = servicoConta.CarregarGarcons();
+            return View(vm);
+        }
+
+        EditarContaDto dto = mapper.Map<EditarContaDto>(vm);
+
+        Result resultado = servicoConta.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+            ViewBag.Mesas = servicoConta.CarregarMesas();
+            ViewBag.Garcons = servicoConta.CarregarGarcons();
+            return View(vm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

@@ -21,13 +21,13 @@ public record EditarContaDto(
     Guid Id,
     string NomeCliente,
     string Garcom,
-    int Mesa
+    string Mesa
 );
 public record ExcluirContaDto(
     Guid Id,
     string NomeCliente,
     string Garcom,
-    int Mesa,
+    int Mesa,   
     DateTime DataDeAbertura,
     DateTime? DataDeFechamento,
     StatusConta StatusConta,

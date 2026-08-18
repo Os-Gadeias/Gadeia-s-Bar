@@ -84,4 +84,33 @@ public class ServicoConta(
 
         return Result.Ok();
     }
+
+    public Result Editar(EditarContaDto dto)
+    {
+        Conta? conta = repositorioConta.SelecionarPorId(dto.Id);
+
+        if (conta is null)
+            return Result.Fail("Conta não encontrada!");
+
+        Mesa? mesa = repositorioMesa.SelecionarPorId(new Guid(dto.Mesa));
+
+        if (mesa is null)
+            return Result.Fail("Mesa não encontrada!");
+
+        Garcom? garcom = repositorioGarcom.SelecionarPorId(new Guid(dto.Garcom));
+
+        if (garcom is null)
+            return Result.Fail("Garçom não encontrado!");
+
+        Conta contaAtualizada = new(dto.NomeCliente, garcom, mesa);
+
+        Result resultadoValidacao = ValidarEntidade(contaAtualizada);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioConta.Editar(conta.Id, contaAtualizada);
+
+        return Result.Ok();
+    }
 }
