@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
+namespace GadeiasBar.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Config : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -253,7 +253,7 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                         column: x => x.ProdutoId,
                         principalTable: "TB_Produto",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

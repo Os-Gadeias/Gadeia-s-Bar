@@ -109,4 +109,20 @@ public class ContaController(
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Visualizar(Guid id)
+    {
+        Result<ListarContaDto> resultado = servicoConta.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ListarContaViewModel vm = mapper.Map<ListarContaViewModel>(resultado.Value);
+
+        return View(vm);
+    }
 }

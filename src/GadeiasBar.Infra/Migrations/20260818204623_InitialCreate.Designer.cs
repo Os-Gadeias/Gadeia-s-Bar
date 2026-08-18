@@ -4,16 +4,19 @@ using GadeiasBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
+namespace GadeiasBar.Infra.Migrations
 {
     [DbContext(typeof(GadeiasBarDbContext))]
-    partial class GadeiasBarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818204623_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +130,7 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
 
                     b.HasIndex("ProdutoId");
 
-                    b.ToTable("Pedido");
+                    b.ToTable("Pedido", (string)null);
                 });
 
             modelBuilder.Entity("GadeiasBar.Dominio.Modulos.ModuloProduto.Produto", b =>
@@ -383,7 +386,7 @@ namespace GadeiasBar.Infra.Compartilhado.Orm.Migrations
                     b.HasOne("GadeiasBar.Dominio.Modulos.ModuloProduto.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Produto");

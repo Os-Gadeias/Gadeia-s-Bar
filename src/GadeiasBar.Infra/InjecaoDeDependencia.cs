@@ -1,9 +1,13 @@
+using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
+using GadeiasBar.Dominio.Modulos.ModuloPedido;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Compartilhado.Logging;
 using GadeiasBar.Infra.Compartilhado.Orm;
+using GadeiasBar.Infra.Modulos.ModuloConta;
 using GadeiasBar.Infra.Modulos.ModuloGarcom;
 using GadeiasBar.Infra.Modulos.ModuloMesa;
+using GadeiasBar.Infra.Modulos.ModuloPedido;
 using GadeiasBar.Infra.Modulos.ModuloProduto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using GadeiasBar.Dominio.Modulos.ModuloConta;
-using GadeiasBar.Infra.Modulos.ModuloConta;
 namespace GadeiasBar.Infra;
 
 public static class InjecaoDeDependencia
@@ -65,10 +67,10 @@ public static class InjecaoDeDependencia
         .AddSignInManager()
         .AddDefaultTokenProviders();
 
-        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>();
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>();
-        services.AddScoped<IRepositorioConta, RepositorioContaEmOrm>();
         services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>();
+        services.AddScoped<IRepositorioConta, RepositorioContaEmOrm>();
+        services.AddScoped<IRepositorioPedido, RepositorioPedidoEmOrm>();
     }
 }

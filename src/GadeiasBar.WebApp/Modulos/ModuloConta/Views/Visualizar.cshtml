@@ -1,0 +1,54 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Visualizar Conta";
+}
+
+@model ListarContaViewModel
+
+<div class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 720px;">
+    <h1 class="mb-4 text-primary">@ViewBag.Titulo</h1>
+
+    <div class="alert alert-info border-start border-info border-4 rounded-3" role="alert">
+        <strong>Cliente:</strong> @Model.NomeCliente
+    </div>
+
+    <dl class="row mb-4">
+        <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Cliente</dt>
+        <dd class="col-sm-8 mb-2">@Model.NomeCliente</dd>
+
+        <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Garçom</dt>
+        <dd class="col-sm-8 mb-2">@Model.Garcom</dd>
+
+        <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Mesa</dt>
+        <dd class="col-sm-8 mb-2">Número @Model.Mesa</dd>
+
+        <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Data de Abertura</dt>
+        <dd class="col-sm-8 mb-2">@Model.DataDeAbertura.ToString("dd/MM/yyyy HH:mm")</dd>
+
+        @if (Model.DataDeFechamento is not null)
+        {
+            <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Data de Fechamento</dt>
+            <dd class="col-sm-8 mb-2">@Model.DataDeFechamento?.ToString("dd/MM/yyyy HH:mm")</dd>
+        }
+
+        <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Status</dt>
+        <dd class="col-sm-8 mb-2">
+            <span class="badge text-bg-primary">@Model.StatusConta</span>
+        </dd>
+
+        <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Valor Total</dt>
+        <dd class="col-sm-8 mb-0">
+            <span class="fs-5 fw-bold text-success">R$ @Model.ValorFinal.ToString("N2")</span>
+        </dd>
+    </dl>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">
+            Voltar
+        </a>
+
+        <a class="btn btn-primary rounded-pill px-4" asp-action="Editar" asp-route-id="@Model.Id">
+            Editar
+        </a>
+    </div>
+</div>
