@@ -1,7 +1,6 @@
 using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 using GadeiasBar.Dominio.Modulos.ModuloMesa;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GadeiasBar.Testes.Unidade.Modulos.ModuloConta;
 
@@ -60,7 +59,6 @@ public sealed class ContaTests
         var garcom = new Garcom();
         var mesa = new Mesa();
 
-        // Criando uma string com exatamente 100 caracteres
         string nomeNoLimite = new string('A', 100);
         var conta = new Conta(nomeNoLimite, garcom, mesa);
 
@@ -111,8 +109,6 @@ public sealed class ContaTests
         var mesaNova = new Mesa();
         var contaAtualizada = new Conta("Maria", garcomNovo, mesaNova);
 
-        // Simulando a mudança de status (assumindo que exista outro valor além de Aberta no seu enum)
-        // Se o único valor do enum que você testar for Aberta, ele apenas copiará Aberta novamente.
         contaAtualizada.StatusConta = (StatusConta)1;
 
         // Act
