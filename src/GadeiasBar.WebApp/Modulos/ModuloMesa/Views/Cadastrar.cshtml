@@ -1,6 +1,6 @@
 @{
     Layout = "_Layout";
-    ViewBag.Titulo = "Cadastro de Produto";
+    ViewBag.Titulo = "Cadastro de Mesa";
 }
 
 @model CadastrarMesaViewModel;
@@ -13,16 +13,15 @@
             <span asp-validation-for="NumeroMesa" class="text-danger small fw-semibold"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="StatusMesa" class="form-label fw-semibold text-primary text-uppercase small">Tipo
-                Produto</label>
-                <select class="form-control" asp-for="StatusMesa">
-                    <option value="@StatusMesa.Livre">Bebida</option>
-                    <option value="@StatusMesa.Ocupada">Comida</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label asp-for="QuantidadeLugares"
-                       class="form-label fw-semibold text-primary text-uppercase small">Valor</label>
+            <label asp-for="StatusMesa" class="form-label fw-semibold text-primary text-uppercase small">Status Mesa</label>
+            <select class="form-control" asp-for="StatusMesa">
+                <option value="@StatusMesa.Livre">Livre</option>
+                <option value="@StatusMesa.Ocupada">Ocupada</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="QuantidadeLugares" class="form-label fw-semibold text-primary text-uppercase small">Quantidade
+                de Lugares</label>
                 <input asp-for="QuantidadeLugares" type="number" min="1" class="form-control">
                 <span asp-validation-for="QuantidadeLugares" class="text-danger small fw-semibold"></span>
             </div>

@@ -48,11 +48,19 @@ public class ServicoConta(
     }
     public List<SelectListItem> CarregarMesas()
     {
-        return repositorioMesa.SelecionarTodos().Select(m => new SelectListItem(m.NumeroMesa.ToString(), m.Id.ToString())).ToList();
+        return repositorioMesa.SelecionarTodos()
+            .Where(m => m.statusMesa == StatusMesa.Livre)
+            .Select(m => new SelectListItem(
+                m.NumeroMesa.ToString(),
+                m.Id.ToString()
+    ))
+    .ToList();
     }
     public List<SelectListItem> CarregarGarcons()
     {
-        return repositorioGarcom.SelecionarTodos().Select(m => new SelectListItem(m.Nome.ToString(), m.Id.ToString())).ToList();
+        return repositorioGarcom.SelecionarTodos()
+            .Select(m => new SelectListItem(m.Nome.ToString(), m.Id.ToString()))
+            .ToList();
     }
 
     public Result<ListarContaDto> SelecionarPorId(Guid id)
