@@ -47,15 +47,18 @@ public class ServicoConta(
             c.DataDeAbertura.ToShortDateString(), c.DataDeFechamento?.ToShortDateString(), c.StatusConta, c.ValorFinal
         )).ToList();
     }
-    public List<SelectListItem> CarregarMesas()
+    public List<SelectListItem> CarregarMesas(Guid? idMesaIgnorado = null)
     {
         return repositorioMesa.SelecionarTodos()
-            .Where(m => m.statusMesa == StatusMesa.Livre)
+            .Where(m =>
+                m.statusMesa == StatusMesa.Livre ||
+                m.Id == idMesaIgnorado
+            )
             .Select(m => new SelectListItem(
                 m.NumeroMesa.ToString(),
                 m.Id.ToString()
-    ))
-    .ToList();
+            ))
+            .ToList();
     }
     public List<SelectListItem> CarregarGarcons()
     {

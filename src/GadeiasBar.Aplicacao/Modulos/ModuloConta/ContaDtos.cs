@@ -19,9 +19,10 @@ public record CadastrarContaDto(
     string Mesa
 );
 public record EditarContaDto(
-    Guid Id,
+     Guid Id,
     string NomeCliente,
     string Garcom,
+    Guid IdMesa,
     string Mesa
 );
 public record ExcluirContaDto(

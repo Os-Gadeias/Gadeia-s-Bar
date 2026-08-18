@@ -12,5 +12,6 @@ public class ContaProfile : Profile
         CreateMap<ListarContaDto, ExcluirContaViewModel>();
         CreateMap<ExcluirContaViewModel, ExcluirContaDto>();
         CreateMap<ListarContaDto, EditarContaViewModel>();
+        CreateMap<EditarContaViewModel, EditarContaDto>();
     }
 }

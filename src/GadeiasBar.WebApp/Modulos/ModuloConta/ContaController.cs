@@ -99,7 +99,7 @@ public class ContaController(
 
         EditarContaViewModel vm = mapper.Map<EditarContaViewModel>(resultado.Value);
 
-        List<SelectListItem> Mesas = servicoConta.CarregarMesas();
+        List<SelectListItem> Mesas = servicoConta.CarregarMesas(idMesaIgnorado: vm.IdMesa);
 
         if (Mesas.Count == 0)
         {
