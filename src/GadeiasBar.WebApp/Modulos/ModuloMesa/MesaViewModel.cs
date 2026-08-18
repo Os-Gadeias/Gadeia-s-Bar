@@ -27,7 +27,7 @@ public record EditarMesaViewModel(
     Guid Id,
 
     [Required(ErrorMessage ="O campo \"Numero Da Mesa\" deve ser preenchido")]
-    [Range(0, int.MaxValue, ErrorMessage = "O numero da Mesa deve ser maior que 0")]
+    [Range(1, int.MaxValue, ErrorMessage = "O numero da Mesa deve ser maior que 0")]
     int NumeroMesa,
 
     [Required(ErrorMessage = "O campo \"Quantidade De Lugares\" deve ser preenchido")]
