@@ -15,11 +15,11 @@ public record ListarContaViewModel(
     decimal ValorFinal
 );
 public record CadastrarContaViewModel(
-    [Required]
+    [Required(ErrorMessage = "O campo \"Nome Cliente\" é obrigatório!")]
     string NomeCliente,
-    [Required]
+    [Required(ErrorMessage = "O campo \"Garcom\" é obrigatório!")]
     string Garcom,
-    [Required]
+    [Required(ErrorMessage = "O campo \"Mesa\" é obrigatório!")]
     string Mesa
 );
 public record EditarContaViewModel(
