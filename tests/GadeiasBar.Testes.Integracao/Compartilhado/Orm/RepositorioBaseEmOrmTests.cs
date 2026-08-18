@@ -2,6 +2,8 @@ using GadeiasBar.Infra.Compartilhado.Orm;
 using GadeiasBar.Testes.Integracao.Compartilhado.Identity;
 using Microsoft.EntityFrameworkCore;
 using FizzWare.NBuilder;
+using GadeiasBar.Infra.Modulos.ModuloConta;
+using GadeiasBar.Dominio.Modulos.ModuloConta;
 
 
 namespace GadeiasBar.Testes.Integracao.Compartilhado.Orm;
@@ -9,7 +11,7 @@ namespace GadeiasBar.Testes.Integracao.Compartilhado.Orm;
 public abstract class RepositorioBaseEmOrmTests
 {
     protected GadeiasBarDbContext dbContext = null!;
-    // protected RepositorioDisciplinaEmOrm repositorioDisciplina = null!;
+    protected RepositorioContaEmOrm repositorioConta = null!;
 
 
     // Hooks / Ganchos
@@ -17,17 +19,16 @@ public abstract class RepositorioBaseEmOrmTests
     public void InicializarContexto()
     {
         dbContext = CriarDbContext(Guid.NewGuid());
+        repositorioConta = new(dbContext);
 
-        // Disciplina
-        // repositorioDisciplina = new RepositorioDisciplinaEmOrm(dbContext);
-
-        // BuilderSetup.SetCreatePersistenceMethod<Disciplina>(repositorioDisciplina.Cadastrar);
-        // BuilderSetup.SetCreatePersistenceMethod<IList<Disciplina>>((disciplinas) =>
-        // {
-        //     foreach (Disciplina d in disciplinas)
-        //         repositorioDisciplina.Cadastrar(d);
-        // });
-
+        BuilderSetup.SetCreatePersistenceMethod<Conta>(repositorioConta.Cadastrar);
+        BuilderSetup.SetCreatePersistenceMethod<IList<Conta>>((Contas) =>
+        {
+            {
+                foreach (Conta c in Contas)
+                    repositorioConta.Cadastrar(c);
+            }
+        });
     }
 
     [TestCleanup]
