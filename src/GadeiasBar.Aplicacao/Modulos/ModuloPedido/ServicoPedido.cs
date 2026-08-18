@@ -76,9 +76,9 @@ public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioPro
         )).ToList();
     }
 
-    public Result<ListarPedidoDto> SelecionarPorId(ListarPedidoDto dto)
+    public Result<ListarPedidoDto> SelecionarPorId(Guid Id)
     {
-        Pedido? pedido = repositorioPedido.SelecionarPorId(dto.Id);
+        Pedido? pedido = repositorioPedido.SelecionarPorId(Id);
 
         if (pedido == null)
             return Result.Fail("Pedido não encontrado");
