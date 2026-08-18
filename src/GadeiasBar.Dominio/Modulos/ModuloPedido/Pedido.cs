@@ -16,6 +16,7 @@ public class Pedido : EntidadeBase<Pedido>, IEntidadeDoUsuario
     {
         Produto = produto;
         Quantidade = quantidade;
+        UserId = userId;
     }
 
     public override void Atualizar(Pedido entidadeAtualizada)
