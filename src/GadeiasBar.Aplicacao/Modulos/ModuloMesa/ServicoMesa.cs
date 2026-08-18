@@ -1,10 +1,11 @@
 using FluentResults;
 using GadeiasBar.Aplicacao.Compartilhado;
+using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloMesa;
 
 namespace GadeiasBar.Aplicacao.Modulos.ModuloMesa;
 
-public class ServicoMesa(IRepositorioMesa repositorioMesa) : ServicoBase<Mesa>
+public class ServicoMesa(IRepositorioMesa repositorioMesa, IRepositorioConta repositorioConta) : ServicoBase<Mesa>
 {
     public Result Cadastrar(CadastrarMesaDto dto)
     {
@@ -15,7 +16,7 @@ public class ServicoMesa(IRepositorioMesa repositorioMesa) : ServicoBase<Mesa>
         if (resultValidacao.IsFailed)
             return resultValidacao;
 
-        if (ExiateMesa_ComMesmoNumero(dto.NumeroMesa))
+        if (ExisteMesa_ComMesmoNumero(dto.NumeroMesa))
             return Falha(nameof(dto.NumeroMesa), $"O Numero da Mesa: {dto.NumeroMesa} Já esta sendo usado");
 
         repositorioMesa.Cadastrar(mesa);
@@ -28,7 +29,10 @@ public class ServicoMesa(IRepositorioMesa repositorioMesa) : ServicoBase<Mesa>
         Mesa? mesa = repositorioMesa.SelecionarPorId(dto.Id);
 
         if (mesa == null)
-            return Falha(nameof(dto.NumeroMesa), "Mesa não emcontrada");
+            return Result.Fail("Mesa não encontrada");
+
+        if (ExisteContaAtreladaAMesa(mesa))
+            return Result.Fail("Não é possível excluir mesa atrelada a uma conta!");
 
         repositorioMesa.Excluir(dto.Id);
 
@@ -49,7 +53,7 @@ public class ServicoMesa(IRepositorioMesa repositorioMesa) : ServicoBase<Mesa>
         if (resultValidação.IsFailed)
             return resultValidação;
 
-        if (ExiateMesa_ComMesmoNumero(dto.NumeroMesa, dto.Id))
+        if (ExisteMesa_ComMesmoNumero(dto.NumeroMesa, dto.Id))
             return Falha(nameof(dto.NumeroMesa), "Ja existe uma mesa com esse numero");
 
         repositorioMesa.Editar(dto.Id, mesaAtualizada);
@@ -77,9 +81,13 @@ public class ServicoMesa(IRepositorioMesa repositorioMesa) : ServicoBase<Mesa>
         )).ToList();
     }
 
-    private bool ExiateMesa_ComMesmoNumero(int numeroMesa, Guid? idNull = null)
+    private bool ExisteMesa_ComMesmoNumero(int numeroMesa, Guid? idNull = null)
     {
         return repositorioMesa.SelecionarTodos()
         .Any(n => n.NumeroMesa == numeroMesa && n.Id != idNull);
+    }
+    private bool ExisteContaAtreladaAMesa(Mesa mesaAtrelada)
+    {
+        return repositorioConta.SelecionarTodos().Any(c => c.Mesa == mesaAtrelada);
     }
 }

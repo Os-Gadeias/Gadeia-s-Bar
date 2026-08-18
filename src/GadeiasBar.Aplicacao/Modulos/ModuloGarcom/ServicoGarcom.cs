@@ -1,11 +1,12 @@
 using System.Net.Mail;
 using FluentResults;
 using GadeiasBar.Aplicacao.Compartilhado;
+using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 
 namespace GadeiasBar.Aplicacao.Modulos.ModuloGarcom;
 
-public class ServicoGarcom(IRepositorioGarcom repositorioGarcom) : ServicoBase<Garcom>
+public class ServicoGarcom(IRepositorioGarcom repositorioGarcom, IRepositorioConta repositorioConta) : ServicoBase<Garcom>
 {
     public Result Cadastrar(CadastrarGarcomDto dto)
     {
@@ -51,6 +52,9 @@ public class ServicoGarcom(IRepositorioGarcom repositorioGarcom) : ServicoBase<G
         if (garcom is null)
             return Result.Fail("Garcom não encontrado.");
 
+        if (ExisteContaAtreladaAoGarcom(garcom))
+            return Result.Fail("Não é possível excluir Garçom atrelado a uma Conta!");
+
         repositorioGarcom.Excluir(garcom.Id);
 
         return Result.Ok();
@@ -71,5 +75,9 @@ public class ServicoGarcom(IRepositorioGarcom repositorioGarcom) : ServicoBase<G
         repositorioGarcom.Editar(dto.Id, garcomAtualizado);
 
         return Result.Ok();
+    }
+    private bool ExisteContaAtreladaAoGarcom(Garcom garcomSelecionado)
+    {
+        return repositorioConta.SelecionarTodos().Any(c => c.Garcom == garcomSelecionado);
     }
 }
