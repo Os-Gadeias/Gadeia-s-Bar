@@ -50,5 +50,14 @@ public class Mesa : EntidadeBase<Mesa>, IEntidadeDoUsuario
 
         return erros;
     }
+
+    public void OcuparMesa(bool OcuparAMesa)
+    {
+        if (OcuparAMesa)
+            statusMesa = StatusMesa.Ocupada;
+
+        else
+            statusMesa = StatusMesa.Livre;
+    }
 }
 

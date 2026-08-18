@@ -1,5 +1,4 @@
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
-using GadeiasBar.Dominio.Modulos.ModuloMesa;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 using GadeiasBar.Infra.Compartilhado.Logging;
 using GadeiasBar.Infra.Compartilhado.Orm;
@@ -13,7 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
+using GadeiasBar.Dominio.Modulos.ModuloConta;
+using GadeiasBar.Infra.Modulos.ModuloConta;
 namespace GadeiasBar.Infra;
 
 public static class InjecaoDeDependencia
@@ -68,5 +68,7 @@ public static class InjecaoDeDependencia
         services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>();
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>();
+        services.AddScoped<IRepositorioConta, RepositorioContaEmOrm>();
+        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>();
     }
 }
