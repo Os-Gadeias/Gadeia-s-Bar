@@ -42,8 +42,9 @@ public class ServicoConta(
 
     public List<ListarContaDto> SelecionarTodos()
     {
-        return repositorioConta.SelecionarTodos().Select(c => new ListarContaDto(c.Id, c.NomeCliente, c.Garcom.Nome, c.Mesa.NumeroMesa
-        , c.DataDeAbertura, c.DataDeFechamento, c.StatusConta, c.ValorFinal
+        return repositorioConta.SelecionarTodos().Select(c => new ListarContaDto(
+            c.Id, c.NomeCliente, c.Garcom.Nome, c.Mesa.Id, c.Mesa.NumeroMesa,
+            c.DataDeAbertura, c.DataDeFechamento, c.StatusConta, c.ValorFinal
         )).ToList();
     }
     public List<SelectListItem> CarregarMesas()
@@ -74,6 +75,7 @@ public class ServicoConta(
             conta.Id,
             conta.NomeCliente,
             conta.Garcom.Nome,
+            conta.Mesa.Id,
             conta.Mesa.NumeroMesa,
             conta.DataDeAbertura,
             conta.DataDeFechamento,
@@ -88,7 +90,16 @@ public class ServicoConta(
         if (conta is null)
             return Result.Fail("Conta não encontrada!");
 
+        Mesa? mesa = repositorioMesa.SelecionarPorId(dto.IdMesa);
+
+        if (mesa is null)
+            return Result.Fail("Mesa não encontrada!");
+
         repositorioConta.Excluir(dto.Id);
+
+        mesa.OcuparMesa(OcuparAMesa: false);
+
+        repositorioMesa.Editar(mesa.Id, mesa);
 
         return Result.Ok();
     }
