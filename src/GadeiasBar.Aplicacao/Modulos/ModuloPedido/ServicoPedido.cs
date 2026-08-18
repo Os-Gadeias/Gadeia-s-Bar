@@ -1,0 +1,92 @@
+using FluentResults;
+using GadeiasBar.Aplicacao.Compartilhado;
+using GadeiasBar.Aplicacao.Modulos.ModuloPedido;
+using GadeiasBar.Dominio.Modulos.ModuloPedido;
+using GadeiasBar.Dominio.Modulos.ModuloProduto;
+using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
+
+public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioProduto repositorioProduto) : ServicoBase<Pedido>
+{
+    public Result Cadastrar(CadastrarPedidoDto dto)
+    {
+        // Buscar o produto pelo ID
+        Produto? produto = repositorioProduto.SelecionarPorId(dto.ProdutoId);
+
+        // Validar se o produto existe
+        if (produto == null)
+            return Falha(string.Empty, "Produto não encontrado");
+
+        // Criar o pedido com o Produto completo
+        Pedido pedido = new Pedido(produto, dto.Quantidade);
+
+        Result result = ValidarEntidade(pedido);
+
+        if (result.IsFailed)
+            return result;
+
+        repositorioPedido.Cadastrar(pedido);
+
+        return Result.Ok();
+    }
+
+    public Result Excluir(ExcluirPedidoDto dto)
+    {
+        Pedido? pedido = repositorioPedido.SelecionarPorId(dto.Id);
+
+        if (pedido == null)
+            return Falha(string.Empty, "Pedido não encontrado");
+
+        repositorioPedido.Excluir(dto.Id);
+
+        return Result.Ok();
+    }
+
+    public Result Editar(EditarPedidoDto dto)
+    {
+        Produto? produto = repositorioProduto.SelecionarPorId(dto.ProdutoId);
+
+        Pedido? pedido = repositorioPedido.SelecionarPorId(dto.Id);
+
+        if (produto == null)
+            return Falha(string.Empty, "Produto não encontrado");
+
+        if (pedido == null)
+            return Falha(string.Empty, "Pedido não encontrado");
+
+        pedido.Atualizar(new Pedido(produto, dto.Quantidade));
+
+        Result result = ValidarEntidade(pedido);
+
+        if (result.IsFailed)
+            return result;
+
+        repositorioPedido.Editar(dto.Id, pedido);
+
+        return Result.Ok();
+    }
+
+    public List<ListarPedidoDto> SelecionarTodos()
+    {
+        return repositorioPedido
+        .SelecionarTodos()
+        .Select(p => new ListarPedidoDto(
+            p.Id,
+            p.Produto.Nome,
+            p.Quantidade
+        )).ToList();
+    }
+
+    public Result<ListarPedidoDto> SelecionarPorId(ListarPedidoDto dto)
+    {
+        Pedido? pedido = repositorioPedido.SelecionarPorId(dto.Id);
+
+        if (pedido == null)
+            return Result.Fail("Pedido não encontrado");
+
+        return Result.Ok(new ListarPedidoDto(
+            pedido.Id,
+            pedido.Produto.Nome,
+            pedido.Quantidade
+        ));
+    }
+}

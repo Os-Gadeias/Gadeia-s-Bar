@@ -12,11 +12,10 @@ public class Pedido : EntidadeBase<Pedido>, IEntidadeDoUsuario
 
     public Pedido() { }
 
-    public Pedido(Produto produto, int quantidade, Guid userId)
+    public Pedido(Produto produto, int quantidade)
     {
         Produto = produto;
         Quantidade = quantidade;
-        UserId = userId;
     }
 
     public override void Atualizar(Pedido entidadeAtualizada)

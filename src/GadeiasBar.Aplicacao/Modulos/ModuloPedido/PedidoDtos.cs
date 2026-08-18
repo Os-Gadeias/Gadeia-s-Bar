@@ -4,23 +4,23 @@ namespace GadeiasBar.Aplicacao.Modulos.ModuloPedido;
 
 public record ListarPedidoDto(
     Guid Id,
-    Produto Produto,
+    string ProdutoNome,
     int Quantidade
 );
 
 public record CadastrarPedidoDto(
-    Produto Produto,
+    Guid ProdutoId,
     int Quantidade
 );
 
 public record EditarPedidoDto(
     Guid Id,
-    Produto Produto,
+    Guid ProdutoId,
     int Quantidade
 );
 
 public record ExcluirPedidoDto(
     Guid Id,
-    Produto Produto,
+    Guid ProdutoId,
     int Quantidade
 );
