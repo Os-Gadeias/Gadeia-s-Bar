@@ -44,7 +44,7 @@ public class ServicoConta(
     {
         return repositorioConta.SelecionarTodos().Select(c => new ListarContaDto(
             c.Id, c.NomeCliente, c.Garcom.Nome, c.Mesa.Id, c.Mesa.NumeroMesa,
-            c.DataDeAbertura, c.DataDeFechamento, c.StatusConta, c.ValorFinal
+            c.DataDeAbertura.ToShortDateString(), c.DataDeFechamento?.ToShortDateString(), c.StatusConta, c.ValorFinal
         )).ToList();
     }
     public List<SelectListItem> CarregarMesas()
@@ -77,8 +77,8 @@ public class ServicoConta(
             conta.Garcom.Nome,
             conta.Mesa.Id,
             conta.Mesa.NumeroMesa,
-            conta.DataDeAbertura,
-            conta.DataDeFechamento,
+            conta.DataDeAbertura.ToShortDateString(),
+            conta.DataDeFechamento?.ToShortDateString(),
             conta.StatusConta,
             conta.ValorFinal);
     }

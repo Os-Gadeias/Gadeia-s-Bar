@@ -8,8 +8,8 @@ public record ListarContaDto(
     string Garcom,
     Guid IdMesa,
     int Mesa,
-    DateTime DataDeAbertura,
-    DateTime? DataDeFechamento,
+    string DataDeAbertura,
+    string? DataDeFechamento,
     StatusConta StatusConta,
     decimal ValorFinal
 );
@@ -30,8 +30,8 @@ public record ExcluirContaDto(
     string Garcom,
     Guid IdMesa,
     int Mesa,
-    DateTime DataDeAbertura,
-    DateTime? DataDeFechamento,
+    string DataDeAbertura,
+    string? DataDeFechamento,
     StatusConta StatusConta,
     decimal ValorFinal
 );
