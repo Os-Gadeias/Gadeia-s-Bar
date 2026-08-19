@@ -23,12 +23,12 @@
         <dd class="col-sm-8 mb-2">Número @Model.Mesa</dd>
 
         <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Data de Abertura</dt>
-        <dd class="col-sm-8 mb-2">@Model.DataDeAbertura.ToString("dd/MM/yyyy HH:mm")</dd>
+        <dd class="col-sm-8 mb-2">@Model.DataDeAbertura</dd>
 
         @if (Model.DataDeFechamento is not null)
         {
             <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Data de Fechamento</dt>
-            <dd class="col-sm-8 mb-2">@Model.DataDeFechamento?.ToString("dd/MM/yyyy HH:mm")</dd>
+            <dd class="col-sm-8 mb-2">@Model.DataDeFechamento</dd>
         }
 
         <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Status</dt>
