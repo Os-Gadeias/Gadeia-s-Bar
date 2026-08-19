@@ -115,24 +115,33 @@ public class ServicoConta(
         if (conta is null)
             return Result.Fail("Conta não encontrada!");
 
-        Mesa? mesa = repositorioMesa.SelecionarPorId(dto.IdMesa);
+        Mesa? mesaSelecionada = repositorioMesa.SelecionarPorId(dto.IdMesa);
 
-        if (mesa is null)
+        if (mesaSelecionada is null)
             return Result.Fail("Mesa não encontrada!");
 
-        Garcom? garcom = repositorioGarcom.SelecionarPorId(dto.IdGarcom);
+        Garcom? garcomSelecionado = repositorioGarcom.SelecionarPorId(dto.IdGarcom);
 
-        if (garcom is null)
+        if (garcomSelecionado is null)
             return Result.Fail("Garçom não encontrado!");
 
-        Conta contaAtualizada = new(dto.NomeCliente, garcom, mesa);
+        Conta contaAtualizada = new(dto.NomeCliente, garcomSelecionado, mesaSelecionada);
 
         Result resultadoValidacao = ValidarEntidade(contaAtualizada);
 
         if (resultadoValidacao.IsFailed)
             return resultadoValidacao;
 
+        if (conta.Mesa != mesaSelecionada)
+        {
+            conta.Mesa.OcuparMesa(false);
+            mesaSelecionada.OcuparMesa(true);
+        }
+
         repositorioConta.Editar(conta.Id, contaAtualizada);
+        repositorioMesa.Editar(mesaSelecionada.Id, mesaSelecionada);
+        repositorioMesa.Editar(conta.Mesa.Id, conta.Mesa);
+
 
         return Result.Ok();
     }
