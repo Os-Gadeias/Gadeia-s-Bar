@@ -17,11 +17,11 @@ public class ContaE2ETests : E2ETestsBase
 
         await RegistrarGarcom();
 
-        await Page.GotoAsync(UrlBase + "/Cadastrar/Conta");
+        await Page.GotoAsync(UrlBase + "/Conta/Cadastrar");
 
         await Page.GetByLabel("Nome Cliente").FillAsync("Kauazin Silva");
         await Page.GetByLabel("Selecione a Mesa").SelectOptionAsync("45");
-        await Page.GetByLabel("Selecione o Garçom").SelectOptionAsync("Thiago");
+        await Page.GetByLabel("Selecione o Garçom").SelectOptionAsync("Victor");
 
         await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
 
@@ -29,8 +29,8 @@ public class ContaE2ETests : E2ETestsBase
 
         Assert.AreEqual("/Conta/Listar", rotaAbsoluta);
         await Expect(Page.GetByText("Kauazin Silva")).ToBeVisibleAsync();
-        await Expect(Page.GetByText("45")).ToBeVisibleAsync();
-        await Expect(Page.GetByText("Thiago")).ToBeVisibleAsync();
+        await Expect(Page.GetByText("Nº da Mesa")).ToBeVisibleAsync();
+        await Expect(Page.GetByText("Victor")).ToBeVisibleAsync();
 
     }
     private async Task RegistrarMesa()
@@ -45,7 +45,7 @@ public class ContaE2ETests : E2ETestsBase
     private async Task RegistrarGarcom()
     {
         await Page.GotoAsync(UrlBase + "/Garcom/Cadastrar");
-        await Page.GetByLabel("Nome").FillAsync("Thiago");
+        await Page.GetByLabel("Nome").FillAsync("Victor");
         await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
     }
 }
