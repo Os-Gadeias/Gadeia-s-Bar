@@ -13,6 +13,7 @@
     <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
 
     <form asp-action="Cadastrar" method="post">
+        <input asp-for="ContaId" type="hidden">
 
         <div class="mb-3">
             <label asp-for="Produto.Id" class="form-label fw-semibold text-primary text-uppercase small">
@@ -26,7 +27,7 @@
                     @foreach (var produto in ViewBag.Produtos)
                     {
                         <option value="@produto.Id">
-                            @produto.Nome - @produto.Preco.ToString("C")
+                            @produto.Nome - @produto.Valor.ToString("C")
                         </option>
                     }
                 }
@@ -46,7 +47,7 @@
         </div>
 
         <div class="d-flex justify-content-end gap-2 mt-4">
-            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar" asp-route-contaId="@Model.ContaId">
                 Voltar
             </a>
 

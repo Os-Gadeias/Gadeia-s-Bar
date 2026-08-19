@@ -5,11 +5,13 @@ namespace GadeiasBar.WebApp.Modulos.ModuloPedido;
 
 public record ListarPedidoViewModel(
     Guid Id,
+    Guid ContaId,
     Produto Produto,
     int Quantidade
 );
 
 public record CadastrarPedidoViewModel(
+    Guid ContaId,
 
     [Required(ErrorMessage = "O campo \"Produto\" deve ser preenchido")]
     Produto Produto,
@@ -21,6 +23,7 @@ public record CadastrarPedidoViewModel(
 
 public record EditarPedidoViewModel(
     Guid Id,
+    Guid ContaId,
 
     [Required(ErrorMessage = "O campo \"Produto\" deve ser preenchido")]
     Produto Produto,

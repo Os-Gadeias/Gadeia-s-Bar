@@ -1,14 +1,23 @@
 using FluentResults;
 using GadeiasBar.Aplicacao.Compartilhado;
 using GadeiasBar.Aplicacao.Modulos.ModuloPedido;
+using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloPedido;
 using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using GadeiasBar.Dominio.Modulos.ModuloProduto.cs;
 
-public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioProduto repositorioProduto) : ServicoBase<Pedido>
+public class ServicoPedido(
+    IRepositorioPedido repositorioPedido,
+    IRepositorioProduto repositorioProduto,
+    IRepositorioConta repositorioConta) : ServicoBase<Pedido>
 {
     public Result Cadastrar(CadastrarPedidoDto dto)
     {
+        Conta? conta = repositorioConta.SelecionarPorId(dto.ContaId);
+
+        if (conta == null)
+            return Falha(nameof(dto.ContaId), "Conta não encontrada");
+
         // Buscar o produto pelo ID
         Produto? produto = repositorioProduto.SelecionarPorId(dto.ProdutoId);
 
@@ -17,7 +26,7 @@ public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioPro
             return Falha(string.Empty, "Produto não encontrado");
 
         // Criar o pedido com o Produto completo
-        Pedido pedido = new Pedido(produto, dto.Quantidade);
+        Pedido pedido = new Pedido(conta, produto, dto.Quantidade);
 
         Result result = ValidarEntidade(pedido);
 
@@ -53,7 +62,7 @@ public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioPro
         if (pedido == null)
             return Falha(string.Empty, "Pedido não encontrado");
 
-        pedido.Atualizar(new Pedido(produto, dto.Quantidade));
+        pedido.Atualizar(new Pedido(pedido.Conta, produto, dto.Quantidade));
 
         Result result = ValidarEntidade(pedido);
 
@@ -71,6 +80,7 @@ public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioPro
         .SelecionarTodos()
         .Select(p => new ListarPedidoDto(
             p.Id,
+            p.ContaId,
             p.Produto.Nome,
             p.Quantidade
         )).ToList();
@@ -85,6 +95,7 @@ public class ServicoPedido(IRepositorioPedido repositorioPedido, IRepositorioPro
 
         return Result.Ok(new ListarPedidoDto(
             pedido.Id,
+            pedido.ContaId,
             pedido.Produto.Nome,
             pedido.Quantidade
         ));

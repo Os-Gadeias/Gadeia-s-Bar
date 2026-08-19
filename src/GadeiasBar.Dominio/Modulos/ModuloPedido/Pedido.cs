@@ -1,19 +1,24 @@
 using GadeiasBar.Dominio.Compartilhado;
 using GadeiasBar.Dominio.Compartilhado.Identity;
+using GadeiasBar.Dominio.Modulos.ModuloConta;
 using GadeiasBar.Dominio.Modulos.ModuloProduto;
 
 namespace GadeiasBar.Dominio.Modulos.ModuloPedido;
 
 public class Pedido : EntidadeBase<Pedido>, IEntidadeDoUsuario
 {
+    public Guid ContaId { get; set; }
+    public Conta Conta { get; set; } = null!;
     public Produto Produto { get; set; } = null!;
     public int Quantidade { get; set; } = 0;
     public Guid UserId { get; set; }
 
     public Pedido() { }
 
-    public Pedido(Produto produto, int quantidade)
+    public Pedido(Conta conta, Produto produto, int quantidade)
     {
+        Conta = conta;
+        ContaId = conta.Id;
         Produto = produto;
         Quantidade = quantidade;
     }

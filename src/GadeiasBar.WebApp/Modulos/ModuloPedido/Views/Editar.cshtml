@@ -27,7 +27,7 @@
                     @foreach (var produto in ViewBag.Produtos)
                     {
                         <option value="@produto.Id">
-                            @produto.Nome - @produto.Preco.ToString("C")
+                            @produto.Nome - @produto.Valor.ToString("C")
                         </option>
                     }
                 }

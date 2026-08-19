@@ -35,10 +35,6 @@ public class ContaConfigurations : IEntityTypeConfiguration<Conta>
         builder.Property(c => c.StatusConta)
             .IsRequired();
 
-        builder.HasMany(c => c.Pedidos)
-            .WithOne()
-            .IsRequired();
-
         builder.Ignore(c => c.ValorFinal);
     }
 }

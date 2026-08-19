@@ -3,6 +3,7 @@ using FluentResults;
 using GadeiasBar.Aplicacao.Modulos.ModuloPedido;
 using GadeiasBar.Aplicacao.Modulos.ModuloProduto;
 using GadeiasBar.Aplicacao.Modulos.ModuloProduto.cs;
+using GadeiasBar.Dominio.Modulos.ModuloProduto;
 using GadeiasBar.WebApp.Compartilhado.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,26 +15,34 @@ public class PedidoController(
     ServicoProduto servicoProduto) : Controller
 {
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(Guid contaId)
     {
-        List<ListarPedidoDto> dtos = servicoPedido.SelecionarTodos();
+        ViewBag.ContaId = contaId;
+        List<ListarPedidoDto> dtos = servicoPedido.SelecionarTodos()
+            .Where(p => p.ContaId == contaId)
+            .ToList();
         List<ListarPedidoViewModel> vm = mapper.Map<List<ListarPedidoViewModel>>(dtos);
         return View(vm);
     }
 
     [HttpGet]
-    public ActionResult Cadastrar()
+    public ActionResult Cadastrar(Guid contaId)
     {
+        ViewBag.ContaId = contaId;
         List<ListarProdutoDto> produtos = servicoProduto.SelecionarTodos();
         ViewBag.Produtos = produtos;
-        return View();
+        return View(new CadastrarPedidoViewModel(contaId, new Produto(), 0));
     }
 
     [HttpPost]
     public ActionResult Cadastrar(CadastrarPedidoViewModel vm)
     {
         if (!ModelState.IsValid)
+        {
+            ViewBag.ContaId = vm.ContaId;
+            ViewBag.Produtos = servicoProduto.SelecionarTodos();
             return View(vm);
+        }
 
         CadastrarPedidoDto dto = mapper.Map<CadastrarPedidoDto>(vm);
         Result result = servicoPedido.Cadastrar(dto);
@@ -41,6 +50,8 @@ public class PedidoController(
         if (result.IsFailed)
         {
             ModelState.AddModelError(result);
+            ViewBag.ContaId = vm.ContaId;
+            ViewBag.Produtos = servicoProduto.SelecionarTodos();
             return View(vm);
         }
 
