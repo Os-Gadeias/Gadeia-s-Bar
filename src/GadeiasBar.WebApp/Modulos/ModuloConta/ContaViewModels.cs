@@ -7,33 +7,36 @@ public record ListarContaViewModel(
     Guid Id,
     string NomeCliente,
     string Garcom,
+    Guid IdMesa,
     int Mesa,
-    DateTime DataDeAbertura,
-    DateTime? DataDeFechamento,
+    string DataDeAbertura,
+    string? DataDeFechamento,
     StatusConta StatusConta,
     decimal ValorFinal
 );
 public record CadastrarContaViewModel(
-    [Required]
+    [Required(ErrorMessage = "O campo \"Nome Cliente\" é obrigatório!")]
     string NomeCliente,
-    [Required]
+    [Required(ErrorMessage = "O campo \"Garcom\" é obrigatório!")]
     string Garcom,
-    [Required]
+    [Required(ErrorMessage = "O campo \"Mesa\" é obrigatório!")]
     string Mesa
 );
 public record EditarContaViewModel(
     Guid Id,
     string NomeCliente,
     string Garcom,
+    Guid IdMesa,
     string Mesa
 );
 public record ExcluirContaViewModel(
     Guid Id,
     string NomeCliente,
     string Garcom,
+    Guid IdMesa,
     int Mesa,
-    DateTime DataDeAbertura,
-    DateTime? DataDeFechamento,
+    string DataDeAbertura,
+    string? DataDeFechamento,
     StatusConta StatusConta,
     decimal ValorFinal
 );

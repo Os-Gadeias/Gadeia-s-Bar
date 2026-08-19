@@ -9,4 +9,9 @@ public static class TempDataExtensions
     {
         tempData["MensagemErro"] = result.Errors.First().Message;
     }
+
+    public static void AddErrorMessage(this ITempDataDictionary tempData, string mensagem)
+    {
+        tempData["MensagemErro"] = mensagem;
+    }
 }

@@ -42,17 +42,29 @@ public class ServicoConta(
 
     public List<ListarContaDto> SelecionarTodos()
     {
-        return repositorioConta.SelecionarTodos().Select(c => new ListarContaDto(c.Id, c.NomeCliente, c.Garcom.Nome, c.Mesa.NumeroMesa
-        , c.DataDeAbertura, c.DataDeFechamento, c.StatusConta, c.ValorFinal
+        return repositorioConta.SelecionarTodos().Select(c => new ListarContaDto(
+            c.Id, c.NomeCliente, c.Garcom.Nome, c.Mesa.Id, c.Mesa.NumeroMesa,
+            c.DataDeAbertura.ToShortDateString(), c.DataDeFechamento?.ToShortDateString(), c.StatusConta, c.ValorFinal
         )).ToList();
     }
-    public List<SelectListItem> CarregarMesas()
+    public List<SelectListItem> CarregarMesas(Guid? idMesaIgnorado = null)
     {
-        return repositorioMesa.SelecionarTodos().Select(m => new SelectListItem(m.NumeroMesa.ToString(), m.Id.ToString())).ToList();
+        return repositorioMesa.SelecionarTodos()
+            .Where(m =>
+                m.statusMesa == StatusMesa.Livre ||
+                m.Id == idMesaIgnorado
+            )
+            .Select(m => new SelectListItem(
+                m.NumeroMesa.ToString(),
+                m.Id.ToString()
+            ))
+            .ToList();
     }
     public List<SelectListItem> CarregarGarcons()
     {
-        return repositorioGarcom.SelecionarTodos().Select(m => new SelectListItem(m.Nome.ToString(), m.Id.ToString())).ToList();
+        return repositorioGarcom.SelecionarTodos()
+            .Select(m => new SelectListItem(m.Nome.ToString(), m.Id.ToString()))
+            .ToList();
     }
 
     public Result<ListarContaDto> SelecionarPorId(Guid id)
@@ -66,9 +78,10 @@ public class ServicoConta(
             conta.Id,
             conta.NomeCliente,
             conta.Garcom.Nome,
+            conta.Mesa.Id,
             conta.Mesa.NumeroMesa,
-            conta.DataDeAbertura,
-            conta.DataDeFechamento,
+            conta.DataDeAbertura.ToShortDateString(),
+            conta.DataDeFechamento?.ToShortDateString(),
             conta.StatusConta,
             conta.ValorFinal);
     }
@@ -80,7 +93,16 @@ public class ServicoConta(
         if (conta is null)
             return Result.Fail("Conta não encontrada!");
 
+        Mesa? mesa = repositorioMesa.SelecionarPorId(dto.IdMesa);
+
+        if (mesa is null)
+            return Result.Fail("Mesa não encontrada!");
+
         repositorioConta.Excluir(dto.Id);
+
+        mesa.OcuparMesa(OcuparAMesa: false);
+
+        repositorioMesa.Editar(mesa.Id, mesa);
 
         return Result.Ok();
     }

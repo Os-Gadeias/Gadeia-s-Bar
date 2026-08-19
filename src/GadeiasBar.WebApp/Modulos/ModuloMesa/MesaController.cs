@@ -65,6 +65,12 @@ public class MesaController(IMapper mapper, ServicoMesa servicoMesa) : Controlle
 
         Result result = servicoMesa.Excluir(dto);
 
+        if (result.IsFailed)
+        {
+            TempData.AddErrorMessage(result);
+            return RedirectToAction(nameof(Listar));
+        }
+
         return RedirectToAction(nameof(Listar));
     }
 

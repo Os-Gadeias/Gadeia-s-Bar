@@ -16,11 +16,17 @@
         <div class="mb-3">
             <label asp-for="Mesa" class="form-label fw-semibold text-primary text-uppercase small">Selecione a Mesa</label>
             <select class="form-control" asp-for="Mesa" asp-items="ViewBag.Mesas">
+                <option value="">Selecione Uma Mesa</option>
             </select>
+            <span asp-validation-for="Mesa" class="text-danger small fw-semibold"></span>
+
         </div>
         <label asp-for="Garcom" class="form-label fw-semibold text-primary text-uppercase small">Selecione o Garçom</label>
         <select class="form-control" asp-for="Garcom" asp-items="ViewBag.Garcons">
+            <option value="">Selecione Um Garçom</option>
         </select>
+        <span asp-validation-for="Garcom" class="text-danger small fw-semibold"></span>
+
     </div>
 
     <div class="d-flex justify-content-end gap-2 mt-4">

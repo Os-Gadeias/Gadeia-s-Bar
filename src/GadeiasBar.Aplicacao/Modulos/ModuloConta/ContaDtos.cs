@@ -6,9 +6,10 @@ public record ListarContaDto(
     Guid Id,
     string NomeCliente,
     string Garcom,
+    Guid IdMesa,
     int Mesa,
-    DateTime DataDeAbertura,
-    DateTime? DataDeFechamento,
+    string DataDeAbertura,
+    string? DataDeFechamento,
     StatusConta StatusConta,
     decimal ValorFinal
 );
@@ -18,18 +19,20 @@ public record CadastrarContaDto(
     string Mesa
 );
 public record EditarContaDto(
-    Guid Id,
+     Guid Id,
     string NomeCliente,
     string Garcom,
+    Guid IdMesa,
     string Mesa
 );
 public record ExcluirContaDto(
     Guid Id,
     string NomeCliente,
     string Garcom,
-    int Mesa,   
-    DateTime DataDeAbertura,
-    DateTime? DataDeFechamento,
+    Guid IdMesa,
+    int Mesa,
+    string DataDeAbertura,
+    string? DataDeFechamento,
     StatusConta StatusConta,
     decimal ValorFinal
 );

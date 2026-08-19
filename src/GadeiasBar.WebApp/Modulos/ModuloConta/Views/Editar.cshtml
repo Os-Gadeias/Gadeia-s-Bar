@@ -4,7 +4,7 @@
 }
 
 @model EditarContaViewModel;
-<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Cadastrar"
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Editar"
       method="post">
     <div class="mb-3">
         <label asp-for="NomeCliente" class="form-label fw-semibold text-primary text-uppercase small">Nome
@@ -13,17 +13,18 @@
             <span asp-validation-for="NomeCliente" class="text-danger small fw-semibold"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="Mesa" class="form-label fw-semibold text-primary text-uppercase small">Selecione a Mesa</label>
-            <select class="form-control" asp-for="Mesa" asp-items="ViewBag.Mesas">
+            <label asp-for="IdMesa" class="form-label fw-semibold text-primary text-uppercase small">Selecione a
+                Mesa</label>
+                <select class="form-control" asp-for="Mesa" asp-items="ViewBag.Mesas">
+                </select>
+            </div>
+            <label asp-for="Garcom" class="form-label fw-semibold text-primary text-uppercase small">Selecione o Garçom</label>
+            <select class="form-control" asp-for="Garcom" asp-items="ViewBag.Garcons">
             </select>
         </div>
-        <label asp-for="Garcom" class="form-label fw-semibold text-primary text-uppercase small">Selecione o Garçom</label>
-        <select class="form-control" asp-for="Garcom" asp-items="ViewBag.Garcons">
-        </select>
-    </div>
 
-    <div class="d-flex justify-content-end gap-2 mt-4">
-        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
-        <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
-    </div>
-</form>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+        </div>
+    </form>

@@ -1,8 +1,10 @@
 using AutoMapper;
 using FluentResults;
 using GadeiasBar.Aplicacao.Modulos.ModuloConta;
+using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 using GadeiasBar.WebApp.Compartilhado.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GadeiasBar.WebApp.Modulos.ModuloConta;
 
@@ -20,8 +22,24 @@ public class ContaController(
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        ViewBag.Mesas = servicoConta.CarregarMesas();
-        ViewBag.Garcons = servicoConta.CarregarGarcons();
+        List<SelectListItem> Mesas = servicoConta.CarregarMesas();
+
+        if (Mesas.Count == 0)
+        {
+            TempData.AddErrorMessage("Nenhuma mesa Disponível! Cadastre uma nova ou libere uma mesa!");
+            return RedirectToAction(nameof(Listar));
+        }
+
+        List<SelectListItem> Garcoms = servicoConta.CarregarGarcons();
+
+        if (Garcoms.Count == 0)
+        {
+            TempData.AddErrorMessage("Nenhuma Garçom Cadastrado! Cadastre um Garçom!");
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ViewBag.Garcons = Garcoms;
+        ViewBag.Mesas = Mesas;
 
         return View();
     }
@@ -80,9 +98,25 @@ public class ContaController(
         }
 
         EditarContaViewModel vm = mapper.Map<EditarContaViewModel>(resultado.Value);
-        ViewBag.Mesas = servicoConta.CarregarMesas();
-        ViewBag.Garcons = servicoConta.CarregarGarcons();
 
+        List<SelectListItem> Mesas = servicoConta.CarregarMesas(idMesaIgnorado: vm.IdMesa);
+
+        if (Mesas.Count == 0)
+        {
+            TempData.AddErrorMessage("Nenhuma mesa Disponível! Cadastre uma nova ou libere uma mesa!");
+            return RedirectToAction(nameof(Listar));
+        }
+
+        List<SelectListItem> Garcoms = servicoConta.CarregarGarcons();
+
+        if (Garcoms.Count == 0)
+        {
+            TempData.AddErrorMessage("Nenhuma Garçom Cadastrado! Cadastre um Garçom!");
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ViewBag.Garcons = Garcoms;
+        ViewBag.Mesas = Mesas;
         return View(vm);
     }
     [HttpPost]
