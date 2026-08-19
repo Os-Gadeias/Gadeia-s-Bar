@@ -130,4 +130,35 @@ public class ServicoContaTest
         Assert.IsNull(contaCadastrada);
         repositorioConta.Verify(r => r.Cadastrar(It.IsAny<Conta>()), Times.Never);
     }
+    [TestMethod]
+    public void EditarConta_ComDadosValidos_Persiste()
+    {
+        Mock<IRepositorioMesa> repositorioMesa = new();
+        Mock<IRepositorioConta> repositorioConta = new();
+        Mock<IRepositorioGarcom> repositorioGarcom = new();
+
+        ServicoConta servicoConta = new(
+            repositorioConta.Object,
+            repositorioMesa.Object,
+            repositorioGarcom.Object);
+
+        Garcom garcom = new("Kauazin");
+        Mesa mesa = new();
+        Conta conta = new("Thiago Kovalski", garcom, mesa);
+
+        Garcom garcom2 = new("Victor");
+        Mesa mesa2 = new();
+
+        repositorioMesa.Setup(r => r.SelecionarPorId(It.IsAny<Guid>())).Returns(mesa2);
+        repositorioGarcom.Setup(r => r.SelecionarPorId(It.IsAny<Guid>())).Returns(garcom2);
+        repositorioConta.Setup(c => c.SelecionarPorId(It.IsAny<Guid>())).Returns(conta);
+
+        repositorioConta.Setup(c => c.Editar(It.IsAny<Guid>(), It.IsAny<Conta>())).Returns(true);
+
+        Result resultado = servicoConta.Editar(
+            new(conta.Id, "Tiago Santini", garcom2.Id, mesa2.Id));
+
+        Assert.IsTrue(resultado.IsSuccess);
+        repositorioConta.Verify(r => r.Editar(It.IsAny<Guid>(), It.IsAny<Conta>()), Times.Once);
+    }
 }

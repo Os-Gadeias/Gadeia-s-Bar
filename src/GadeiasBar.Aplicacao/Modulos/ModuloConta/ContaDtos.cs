@@ -5,6 +5,7 @@ namespace GadeiasBar.Aplicacao.Modulos.ModuloConta;
 public record ListarContaDto(
     Guid Id,
     string NomeCliente,
+    Guid IdGarcom,
     string Garcom,
     Guid IdMesa,
     int Mesa,
@@ -19,11 +20,10 @@ public record CadastrarContaDto(
     string Mesa
 );
 public record EditarContaDto(
-     Guid Id,
+    Guid Id,
     string NomeCliente,
-    string Garcom,
-    Guid IdMesa,
-    string Mesa
+    Guid IdGarcom,
+    Guid IdMesa
 );
 public record ExcluirContaDto(
     Guid Id,

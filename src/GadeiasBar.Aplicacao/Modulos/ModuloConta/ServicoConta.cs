@@ -43,7 +43,7 @@ public class ServicoConta(
     public List<ListarContaDto> SelecionarTodos()
     {
         return repositorioConta.SelecionarTodos().Select(c => new ListarContaDto(
-            c.Id, c.NomeCliente, c.Garcom.Nome, c.Mesa.Id, c.Mesa.NumeroMesa,
+            c.Id, c.NomeCliente, c.Garcom.Id, c.Garcom.Nome, c.Mesa.Id, c.Mesa.NumeroMesa,
             c.DataDeAbertura.ToShortDateString(), c.DataDeFechamento?.ToShortDateString(), c.StatusConta, c.ValorFinal
         )).ToList();
     }
@@ -77,6 +77,7 @@ public class ServicoConta(
         return new ListarContaDto(
             conta.Id,
             conta.NomeCliente,
+            conta.Garcom.Id,
             conta.Garcom.Nome,
             conta.Mesa.Id,
             conta.Mesa.NumeroMesa,
@@ -114,12 +115,12 @@ public class ServicoConta(
         if (conta is null)
             return Result.Fail("Conta não encontrada!");
 
-        Mesa? mesa = repositorioMesa.SelecionarPorId(new Guid(dto.Mesa));
+        Mesa? mesa = repositorioMesa.SelecionarPorId(dto.IdMesa);
 
         if (mesa is null)
             return Result.Fail("Mesa não encontrada!");
 
-        Garcom? garcom = repositorioGarcom.SelecionarPorId(new Guid(dto.Garcom));
+        Garcom? garcom = repositorioGarcom.SelecionarPorId(dto.IdGarcom);
 
         if (garcom is null)
             return Result.Fail("Garçom não encontrado!");

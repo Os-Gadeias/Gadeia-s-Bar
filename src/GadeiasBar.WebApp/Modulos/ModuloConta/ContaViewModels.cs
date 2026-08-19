@@ -6,6 +6,7 @@ namespace GadeiasBar.WebApp.Modulos.ModuloConta;
 public record ListarContaViewModel(
     Guid Id,
     string NomeCliente,
+    Guid IdGarcom,
     string Garcom,
     Guid IdMesa,
     int Mesa,
@@ -25,9 +26,8 @@ public record CadastrarContaViewModel(
 public record EditarContaViewModel(
     Guid Id,
     string NomeCliente,
-    string Garcom,
-    Guid IdMesa,
-    string Mesa
+    Guid IdGarcom,
+    Guid IdMesa
 );
 public record ExcluirContaViewModel(
     Guid Id,
