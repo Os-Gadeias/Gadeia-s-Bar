@@ -18,7 +18,6 @@ public class MapperPedido : Profile
 
         CreateMap<ListarPedidoDto, EditarPedidoViewModel>();
         CreateMap<ListarPedidoDto, ExcluirPedidoViewModel>();
-        CreateMap<ExcluirPedidoDto, ExcluirPedidoViewModel>();
         CreateMap<ExcluirPedidoViewModel, ExcluirPedidoDto>();
     }
 }

@@ -6,7 +6,7 @@ namespace GadeiasBar.WebApp.Modulos.ModuloPedido;
 public record ListarPedidoViewModel(
     Guid Id,
     Guid ContaId,
-    Produto Produto,
+    string ProdutoNome,
     int Quantidade
 );
 
@@ -35,6 +35,7 @@ public record EditarPedidoViewModel(
 
 public record ExcluirPedidoViewModel(
     Guid Id,
-    Produto Produto,
+    Guid ContaId,
+    string ProdutoNome,
     int Quantidade
 );

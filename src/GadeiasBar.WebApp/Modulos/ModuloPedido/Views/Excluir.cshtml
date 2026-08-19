@@ -27,7 +27,7 @@
             Produto
         </dt>
         <dd class="col-sm-8">
-            @Model.Produto.Nome
+            @Model.ProdutoNome
         </dd>
 
         <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">
@@ -41,7 +41,7 @@
 
     <div class="d-flex justify-content-end gap-2 mt-4">
 
-        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar" asp-route-contaId="@Model.ContaId">
             Voltar
         </a>
 

@@ -23,7 +23,5 @@ public record EditarPedidoDto(
 );
 
 public record ExcluirPedidoDto(
-    Guid Id,
-    Guid ProdutoId,
-    int Quantidade
+    Guid Id
 );

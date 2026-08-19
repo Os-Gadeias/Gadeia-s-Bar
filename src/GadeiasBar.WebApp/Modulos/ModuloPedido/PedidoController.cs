@@ -55,7 +55,7 @@ public class PedidoController(
             return View(vm);
         }
 
-        return RedirectToAction(nameof(Listar));
+        return RedirectToAction(nameof(Listar), new { contaId = vm.ContaId });
     }
 
     [HttpGet]
@@ -98,7 +98,7 @@ public class PedidoController(
             return View(vm);
         }
 
-        return RedirectToAction(nameof(Listar));
+        return RedirectToAction(nameof(Listar), new { contaId = vm.ContaId });
     }
 
     [HttpGet]
@@ -124,6 +124,6 @@ public class PedidoController(
 
         Result result = servicoPedido.Excluir(dto);
 
-        return RedirectToAction(nameof(Listar));
+        return RedirectToAction(nameof(Listar), new { contaId = vm.ContaId });
     }
 }
