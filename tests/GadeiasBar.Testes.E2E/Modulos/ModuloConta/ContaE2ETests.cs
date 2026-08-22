@@ -1,6 +1,7 @@
 using GadeiasBar.Dominio.Modulos.ModuloGarcom;
 using GadeiasBar.Dominio.Modulos.ModuloMesa;
 using GadeiasBar.Testes.E2E.Compartilhado;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Playwright;
 
 namespace GadeiasBar.Testes.E2E.Modulos.ModuloConta;
@@ -58,6 +59,24 @@ public class ContaE2ETests : E2ETestsBase
         await Expect(Page.GetByText("Kovalski")).Not.ToBeVisibleAsync();
         await Expect(Page.GetByText("Nº da Mesa 45")).Not.ToBeVisibleAsync();
         await Expect(Page.GetByText("Thiago Kovalski")).Not.ToBeVisibleAsync();
+    }
+    [TestMethod]
+    public async Task ExcluirConta_PersisteENaoRetornaContaNaListagem()
+    {
+        await RegistrarEEntrarAsync("Thiago@gmail.com", "Teste@123");
+
+        await RegistrarMesa("45", "9");
+        await RegistrarGarcom("Thiago Kovalski");
+        await RegistrarConta("Kovalski", "45", "Thiago Kovalski");
+
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Excluir" }).ClickAsync();
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+
+        await Expect(Page.GetByText("Kovalski")).Not.ToBeVisibleAsync();
+        await Expect(Page.GetByText("45")).Not.ToBeVisibleAsync();
+        await Expect(Page.GetByText("Thiago Kovalski")).Not.ToBeVisibleAsync();
+
     }
     private async Task RegistrarConta(string nomeCliente, string mesa, string garcom)
     {
